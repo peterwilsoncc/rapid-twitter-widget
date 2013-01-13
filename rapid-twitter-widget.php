@@ -15,4 +15,9 @@ class Rapid_Twitter_Widget extends WP_Widget {
 
 }
 
+
+add_action( 'widgets_init', 'rapid_twitter_widget_init' );
+function rapid_twitter_widget_init() {
+	register_widget('Rapid_Twitter_Widget');
+}
 ?>
