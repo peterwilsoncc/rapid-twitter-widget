@@ -30,9 +30,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$instance['includeretweets'] = isset($new_instance['includeretweets']);
 		$instance['beforetimesince'] = $new_instance['beforetimesince'];
 
-		wp_cache_delete( 'widget-twitter-' . $this->number , 'widget' );
-		wp_cache_delete( 'widget-twitter-response-code-' . $this->number, 'widget' );
-
 		return $instance;
 	}
 
