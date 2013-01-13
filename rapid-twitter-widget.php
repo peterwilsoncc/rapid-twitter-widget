@@ -89,8 +89,8 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			// Twitter paginates at 200 max tweets. update() should not have accepted greater than 20
 			$show = 200;
 		}
-		$hidereplies = (bool) $instance['hidereplies'];
-		$include_retweets = (bool) $instance['includeretweets'];
+		$hidereplies = (bool) $instance['hidereplies'] ? 'true' : 'false';
+		$include_retweets = (bool) $instance['includeretweets'] ? 'true' : 'false';
 		
 		if ( $this->inlinecssout !== true ) {
 			echo '<style>.rapid-twitter--hidden{display:none;}</style>';
@@ -109,10 +109,10 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '}';
 		echo 'RapidTwitter.widgets.push({';
 		echo 'widget:\'' . esc_js($widget_id) . '\'';
-		echo ',account:\'' . esc_js($account) . '\'';
-		echo ',show:\'' . esc_js($show) . '\'';
-		echo ',hidereplies:\'' . esc_js($hidereplies) . '\'';
-		echo ',includeretweets:\'' . esc_js($include_retweets) . '\'';
+		echo ',screen_name:\'' . esc_js($account) . '\'';
+		echo ',count:\'' . esc_js($show) . '\'';
+		echo ',exclude_replies:\'' . esc_js($hidereplies) . '\'';
+		echo ',include_rts:\'' . esc_js($include_retweets) . '\'';
 		echo ',beforetimesince:\'' . esc_js($before_timesince) . '\'';
 		echo '});';
 		echo '</script>';
