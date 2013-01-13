@@ -10,6 +10,8 @@ License: GPLv2
 */
 
 class Rapid_Twitter_Widget extends WP_Widget {
+	
+	static $inlinecssout;
 
 	function Rapid_Twitter_Widget() {
 		$widget_ops = array('classname' => 'rapid-twitter rapid-twitter--hidden js-rapid-twitter', 'description' => __( 'Display your tweets from Twitter') );
@@ -75,7 +77,48 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		</label></p>';
 	}
 
+	function widget( $args, $instance ) {
+		extract( $args );
+		
+		$account = trim( urlencode( $instance['account'] ) );
+		if ( empty($account) ) return;
+		$title = apply_filters('widget_title', $instance['title']);
+		if ( empty($title) ) $title = __( 'Twitter Updates' );
+		$show = absint( $instance['show'] );  // # of Updates to show
+		if ( $show > 200 ) {
+			// Twitter paginates at 200 max tweets. update() should not have accepted greater than 20
+			$show = 200;
+		}
+		$hidereplies = (bool) $instance['hidereplies'];
+		$include_retweets = (bool) $instance['includeretweets'];
+		
+		if ( $this->inlinecssout !== true ) {
+			echo '<style>.rapid-twitter--hidden{display:none;}</style>';
+			$this->inlinecssout = true;
+		}
+		echo $before_widget;
 
+		echo $before_title;
+		echo "<a href='" . esc_url( "http://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
+		echo $after_title;
+
+		echo $after_widget;
+		echo '<script>';
+		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
+		echo 'RapidTwitter=[];';
+		echo '}';
+		echo 'RapidTwitter.push({';
+		echo 'widget:\'' . esc_js($widget_id) . '\'';
+		echo ',account:\'' . esc_js($account) . '\'';
+		echo ',show:\'' . esc_js($show) . '\'';
+		echo ',hidereplies:\'' . esc_js($hidereplies) . '\'';
+		echo ',includeretweets:\'' . esc_js($include_retweets) . '\'';
+		echo ',beforetimesince:\'' . esc_js($before_timesince) . '\'';
+		echo '});';
+		echo '</script>';
+		
+		
+	}
 
 }
 
