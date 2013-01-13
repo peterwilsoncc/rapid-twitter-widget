@@ -11,6 +11,10 @@ License: GPLv2
 
 class Rapid_Twitter_Widget extends WP_Widget {
 
+	function Rapid_Twitter_Widget() {
+		$widget_ops = array('classname' => 'rapid-twitter', 'description' => __( 'Display your tweets from Twitter') );
+		parent::WP_Widget('twitter', __('Twitter'), $widget_ops);
+	}
 
 
 }
