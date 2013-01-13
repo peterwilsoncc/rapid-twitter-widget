@@ -105,9 +105,9 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo $after_widget;
 		echo '<script>';
 		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
-		echo 'RapidTwitter=[];';
+		echo 'RapidTwitter={};RapidTwitter.widgets=[]';
 		echo '}';
-		echo 'RapidTwitter.push({';
+		echo 'RapidTwitter.widgets.push({';
 		echo 'widget:\'' . esc_js($widget_id) . '\'';
 		echo ',account:\'' . esc_js($account) . '\'';
 		echo ',show:\'' . esc_js($show) . '\'';
