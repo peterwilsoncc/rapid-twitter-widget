@@ -116,7 +116,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo ',beforetimesince:\'' . esc_js($before_timesince) . '\'';
 		echo '});';
 		echo '</script>';
-		
+		wp_enqueue_script( 'rapid-twitter-widget' );
 		
 	}
 
@@ -126,5 +126,17 @@ class Rapid_Twitter_Widget extends WP_Widget {
 add_action( 'widgets_init', 'rapid_twitter_widget_init' );
 function rapid_twitter_widget_init() {
 	register_widget('Rapid_Twitter_Widget');
+}
+
+add_action( 'wp_enqueue_scripts', 'rapid_twitter_widget_script' );
+function rapid_twitter_widget_script() {
+	wp_register_script(
+		'rapid-twitter-widget',
+		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget.js",
+		null,
+		'1.0',
+		true
+	);
+	
 }
 ?>
