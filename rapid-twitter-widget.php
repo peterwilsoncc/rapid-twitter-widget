@@ -16,6 +16,26 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		parent::WP_Widget('twitter', __('Twitter'), $widget_ops);
 	}
 
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+
+		$instance['account'] = trim( strip_tags( stripslashes( $new_instance['account'] ) ) );
+		$instance['account'] = str_replace('http://twitter.com/', '', $instance['account']);
+		$instance['account'] = str_replace('/', '', $instance['account']);
+		$instance['account'] = str_replace('@', '', $instance['account']);
+		$instance['account'] = str_replace('#!', '', $instance['account']); // account for the Ajax URI
+		$instance['title'] = strip_tags(stripslashes($new_instance['title']));
+		$instance['show'] = absint($new_instance['show']);
+		$instance['hidereplies'] = isset($new_instance['hidereplies']);
+		$instance['includeretweets'] = isset($new_instance['includeretweets']);
+		$instance['beforetimesince'] = $new_instance['beforetimesince'];
+
+		wp_cache_delete( 'widget-twitter-' . $this->number , 'widget' );
+		wp_cache_delete( 'widget-twitter-response-code-' . $this->number, 'widget' );
+
+		return $instance;
+	}
+
 	function form( $instance ) {
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array('account' => '', 'title' => '', 'show' => 5, 'hidereplies' => false) );
