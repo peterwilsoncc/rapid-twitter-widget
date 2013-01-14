@@ -51,7 +51,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '<p><label for="' . $this->get_field_id('title') . '">' . esc_html__('Title:') . '
 		<input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />
 		</label></p>
-		<p><label for="' . $this->get_field_id('account') . '">' . esc_html__('Twitter username:') . ' <a href="http://support.wordpress.com/widgets/twitter-widget/#twitter-username" target="_blank">( ? )</a>
+		<p><label for="' . $this->get_field_id('account') . '">' . esc_html__('Twitter username:') . ' 
 		<input class="widefat" id="' . $this->get_field_id('account') . '" name="' . $this->get_field_name('account') . '" type="text" value="' . $account . '" />
 		</label></p>
 		<p><label for="' . $this->get_field_id('show') . '">' . esc_html__('Maximum number of tweets to show:') . '
