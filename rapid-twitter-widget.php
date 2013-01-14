@@ -72,9 +72,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			echo ' checked="checked"';
 		echo ' /> ' . esc_html__('Include retweets') . '</label></p>';
 
-		echo '<p><label for="' . $this->get_field_id('beforetimesince') . '">' . esc_html__('Text to display between tweet and timestamp:') . '
-		<input class="widefat" id="' . $this->get_field_id('beforetimesince') . '" name="' . $this->get_field_name('beforetimesince') . '" type="text" value="' . $before_timesince . '" />
-		</label></p>';
+		echo '<input name="' . $this->get_field_name('beforetimesince') . '" type="hidden" value=" " />';
 	}
 
 	function widget( $args, $instance ) {
