@@ -1,10 +1,12 @@
 === Rapid Twitter Widget ===
 Contributors: floatedesign, peterwilsoncc
 Tags: twitter, widget, tweets
-Stable tag: 1.0
+Stable tag: 0.1
 Requires at least: 3.4.2
 Tested up to: 
 License: GPLv2
+
+THIS IS INCOMPLETE AND DOES NOT WORK YET!
 
 Display tweets from one or more Twitter accounts a WordPress widget.
 
