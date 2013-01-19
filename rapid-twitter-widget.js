@@ -23,9 +23,11 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 				the_html += '<a href="';
 				the_html += 'https://twitter.com/';
 				the_html += use_tweet.user.screen_name;
-				the_html += '">';
-				the_html += '@';
+				the_html += '" class="twitter-atreply">';
+				the_html += '<s>@</s>';
+				the_html += '<b>';
 				the_html += use_tweet.user.screen_name;
+				the_html += '</b>';
 				the_html += '</a>';
 				the_html += ': ';
 			}
