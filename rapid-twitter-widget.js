@@ -102,13 +102,13 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		}
 	}
 	
-	function linkify_tweet(tweet) {
+	function linkify_tweet(text) {
 		var link_exp = /(^|\s)(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-		tweet = tweet.replace(link_exp, " <a href='$2'>$2</a> ");
-		tweet = tweet.replace(/(^|\s|.)@(\w+)/g, " $1<a href=\"https://twitter.com/$2\">@$2</a> ");
-		tweet = tweet.replace(/(^|\s)#(\w+)/g, " $1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a> ");
-		tweet = tweet.replace(/(^|\s)\$([A-Za-z]+)/g, " $1<a href=\"https://twitter.com/search?q=%24$2&src=ctag\">&#36;$2</a> ");
-		return tweet;
+		text = text.replace(link_exp, " <a href='$2'>$2</a> ");
+		text = text.replace(/(^|\s|.)@(\w+)/g, " $1<a href=\"https://twitter.com/$2\">@$2</a> ");
+		text = text.replace(/(^|\s)#(\w+)/g, " $1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a> ");
+		text = text.replace(/(^|\s)\$([A-Za-z]+)/g, " $1<a href=\"https://twitter.com/search?q=%24$2&src=ctag\">&#36;$2</a> ");
+		return text;
  	}
     
 	function getElementsByClass(get_class_name) {
