@@ -188,6 +188,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		script_source += 'include_rts=';
 		script_source += api.include_rts;
 		script_source += '&';
+		script_source += 'include_entities=';
+		script_source += 'true';
+		script_source += '&';
 		script_source += 'callback=RapidTwitter.callback.' + api.ref + '';
 
 
