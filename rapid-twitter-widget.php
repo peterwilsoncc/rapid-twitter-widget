@@ -115,7 +115,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo 'RapidTwitter={};RapidTwitter.widgets={};';
 		echo '}';
 
-		echo 'if(typeof(RapidTwitter.widgets[\'' . $url_ref . '\'])==\'undefined\'){';
+		echo 'if(typeof(RapidTwitter.widgets.' . $url_ref . ')==\'undefined\'){';
 		echo 'RapidTwitter.widgets[\'' . $url_ref . '\']={';
 			echo 'ref: \'' . esc_js($url_ref) . '\'';
 			echo ',screen_name:\'' . esc_js($account) . '\'';
@@ -130,7 +130,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		
 		
 		
-		echo 'RapidTwitter.widgets[\'' . $url_ref . '\'].widgets.push(\'' . esc_js($widget_id) . '\');';
+		echo 'RapidTwitter.widgets.' . $url_ref . '.widgets.push(\'' . esc_js($widget_id) . '\');';
 		echo '</script>';
 		wp_enqueue_script( 'rapid-twitter-widget' );
 		
