@@ -52,12 +52,11 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		for (var i=0; i<ids_el; i++) {
             list = getElementsByClass(ids[i]);
 			
-			var regexp = new RegExp('(\\s|^)'+'rapid-twitter--hidden'+'(\\s|$)'),
-				elements_length = list.length;
+			var elements_length = list.length;
 
 			for (var j = 0; j < elements_length; j++) {
 				var el = list[j];
-				el.className = el.className.replace(regexp, ' ').replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/g,'');
+				removeClass(el, 'rapid-twitter--hidden');
 				
 				var ul = document.createElement('ul');
 				ul.className = 'tweets';
@@ -134,7 +133,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		return list;
 	}
 
-
+	function removeClass(element, class_name) {
+		var regexp = new RegExp('(\\s|^)'+class_name+'(\\s|$)');
+		element.className = element.className.replace(regexp, ' ');
+	}
 
 	//source: http://dean.edwards.name/weblog/2006/07/enum/
 	// generic enumeration
