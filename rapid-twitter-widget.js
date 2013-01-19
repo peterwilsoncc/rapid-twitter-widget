@@ -127,16 +127,16 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 					text: function () {
 						switch (key) {
 							case 'media':
-								return '<a href="' + elem.url + '" class="tweet__media" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>';
+								return '<a href="' + elem.url + '" class="tweet__media" title="' + elem.expanded_url + '">' + elem.display_url + '</a>';
 								break;
 							case 'urls':
-								return (elem.display_url)? '<a href="' + elem.url + '" class="tweet__link" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>': elem.url;
+								return (elem.display_url)? '<a href="' + elem.url + '" class="tweet__link" title="' + elem.expanded_url + '">' + elem.display_url + '</a>': elem.url;
 								break;
 							case 'user_mentions':
-								return '<a href="http://twitter.com/' + elem.screen_name + '" class="tweet__mention" target="_blank"><span>@</span>' + elem.screen_name + '</a>';
+								return '<a href="http://twitter.com/' + elem.screen_name + '" class="tweet__mention"><span>@</span>' + elem.screen_name + '</a>';
 								break;
 							case 'hashtags':
-								return '<a href="http://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag" target="_blank"><span>#</span>' + elem.text + '</a>';
+								return '<a href="http://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag"><span>#</span>' + elem.text + '</a>';
 								break;
 							default:
 								return '';
