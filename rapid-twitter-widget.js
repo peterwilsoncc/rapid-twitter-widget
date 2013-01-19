@@ -5,7 +5,6 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		s, i,script_source;
 	
 	function callback(api, data) {
-		// data = window.data;
 		var ids = api.widgets,
 			ids_el = ids.length,
 			the_html = '';
