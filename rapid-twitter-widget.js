@@ -6,41 +6,6 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		scripts = {},
 		s, i, widget,script_name,script_source, scripts_length,script;
 	
-	/*
-	for ( i=0; i < widget_length; i++ ) {
-		widget = widgets[i];
-
-		script_name = '';
-
-		script_name += widget.count;
-		script_name += '_';
-		script_name += widget.screen_name;
-		script_name += '_';
-		script_name += widget.exclude_replies;
-		script_name += '_';
-		script_name += widget.include_rts;
-		
-		script_source = 'http://api.twitter.com/1/statuses/user_timeline.json?';
-
-		script_source += 'count=';
-		script_source += widget.count;
-		script_source += '&';
-		script_source += 'screen_name=';
-		script_source += widget.screen_name;
-		script_source += '&';
-		script_source += 'exclude_replies=';
-		script_source += widget.exclude_replies;
-		script_source += '&';
-		script_source += 'include_rts=';
-		script_source += widget.include_rts;
-		script_source += '&';
-		script_source += 'callback=RapidTwitter.callback';
-		
-		scripts[script_name] = script_source;
-		
-	}
-	*/
-
 	function callback(widget, data) {
 		// data = window.data;
 		var ids = widget.widgets,
