@@ -11,39 +11,38 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 		for (var i=0; i<tweets.length; i++) {
-			var the_text = '', the_date, the_screen_name, tweet_id;
-			if (typeof tweets[i].retweeted_status == 'undefined') {
-				the_text += tweets[i].text;
+			var use_tweet = tweets[i];
+
+
+			the_html += '<li class="tweet">';
+
+			if (typeof use_tweet.retweeted_status != 'undefined') {
+				use_tweet = use_tweet.retweeted_status;
 				
-				the_date = tweets[i].created_at;
-				the_screen_name = tweets[i].user.screen_name;
-				tweet_id = tweets[i].id_str;
-			}
-			else {
-				//this ensures the text isn't truncated by long user names
-				the_text += 'RT ';
-				the_text += '@' + tweets[i].retweeted_status.user.screen_name;
-				the_text += ': ';
-				the_text += tweets[i].retweeted_status.text;
-				the_date = tweets[i].retweeted_status.created_at;
-				the_screen_name = tweets[i].retweeted_status.user.screen_name
-				tweet_id = tweets[i].retweeted_status.id_str;
+				the_html += 'RT ';
+				the_html += '<a href="';
+				the_html += 'https://twitter.com/';
+				the_html += use_tweet.user.screen_name;
+				the_html += '">';
+				the_html += '@';
+				the_html += use_tweet.user.screen_name;
+				the_html += '</a>';
+				the_html += ': ';
 			}
 
 
-			the_html += '<li>';
-			the_html += linkify_tweet(the_text);
+			the_html += process_entities(use_tweet);
 			
 			
 			the_html += ' ';
 			the_html += '<span class="timesince">';
 			the_html += '<a href="';
 			the_html += 'https://twitter.com/';
-			the_html += the_screen_name;
+			the_html += use_tweet.user.screen_name;
 			the_html += '/status/';
-			the_html += tweet_id;
+			the_html += use_tweet.id_str;
 			the_html += '">';
-			the_html += relative_time(the_date);
+			the_html += relative_time(use_tweet.created_at);
 			the_html += '</a>';
 			the_html += '</span>';
 			the_html += '</li>';
