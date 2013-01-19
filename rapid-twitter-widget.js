@@ -102,6 +102,57 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		}
 	}
 	
+	// source: https://gist.github.com/1292496
+	// Takeru Suzuki
+	function process_entities (tweet) {
+		var result = [],
+			entities = [],
+			lastIndex = 0,
+			key,
+			i,
+			len,
+			elem;
+
+		for (key in tweet.entities) {
+			for (i = 0, len = tweet.entities[key].length; i < len; i++) {
+				elem = tweet.entities[key][i];
+				entities[elem.indices[0]] = {
+					end: elem.indices[1],
+					text: function () {
+						switch (key) {
+							case 'media':
+								return '<a href="' + elem.url + '" class="twitter-timeline-link" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>';
+								break;
+							case 'urls':
+								return (elem.display_url)? '<a href="' + elem.url + '" class="twitter-timeline-link" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>': elem.url;
+								break;
+							case 'user_mentions':
+								return '<a href="http://twitter.com/' + elem.screen_name + '" class="twitter-atreply" target="_blank"><s>@</s><b>' + elem.screen_name + '</b></a>';
+								break;
+							case 'hashtags':
+								return '<a href="http://twitter.com/search?q=%23' + elem.text + '" class="twitter-hashtag" target="_blank"><s>#</s><b>' + elem.text + '</b></a>';
+								break;
+							default:
+								return '';
+						}
+					}()
+				};
+			}
+		}
+		
+		for (i = 0, len = entities.length; i < len; i++) {
+			if (entities[i]) {
+				elem = entities[i];
+				result[result.length] = tweet.text.substring(lastIndex, i);
+				result[result.length] = elem.text;
+				lastIndex = elem.end;
+				i = elem.end - 1;
+			}
+		}
+		
+		result[result.length] = tweet.text.substring(lastIndex);
+		return result.join('');
+	}	
 	function linkify_tweet(text) {
 		var link_exp = /(^|\s)(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 		text = text.replace(link_exp, " <a href='$2'>$2</a> ");
