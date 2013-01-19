@@ -13,23 +13,24 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		for (var k=0; k<tweets.length; k++) {
 			var the_text = '', the_date, the_screen_name;
 			if (typeof tweets[k].retweeted_status == 'undefined') {
-				the_text += linkify_tweet(tweets[k].text);
+				the_text += tweets[k].text;
+				
 				the_date = relative_time(tweets[k].created_at);
 				the_screen_name = tweets[k].user.screen_name;
 			}
 			else {
 				//this ensures the text isn't truncated by long user names
 				the_text += 'RT ';
-				the_text += linkify_tweet('@' + tweets[k].retweeted_status.user.screen_name);
+				the_text += '@' + tweets[k].retweeted_status.user.screen_name;
 				the_text += ': ';
-				the_text += linkify_tweet(tweets[k].retweeted_status.text);
+				the_text += tweets[k].retweeted_status.text;
 				the_date = relative_time(tweets[k].retweeted_status.created_at);
 				the_screen_name = tweets[k].retweeted_status.user.screen_name
 			}
 
 
 			the_html += '<li>';
-			the_html += the_text;
+			the_html += linkify_tweet(the_text);
 			
 			
 			the_html += ' ';
