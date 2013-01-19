@@ -72,7 +72,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		var split_date = time_value.split(" "),
 			the_date = new Date(split_date[1] + " " + split_date[2] + ", " + split_date[5] + " " + split_date[3] + " UTC"),
 			now = new Date(),
-			delta = (now.getTime() - the_date.getTime()) / 1000;
+			delta = (now.getTime() - the_date.getTime()) / 1000,
+			monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 		
 		if(delta < 60) {
 			return 'less than a minute ago';
@@ -93,8 +95,6 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			return '1 day ago';
 		}
 		else {
-			var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 			return the_date.getDate() + ' ' + monthNames[the_date.getMonth()];
 			// return (parseInt(delta / 86400)).toString() + ' days ago';
 		}
