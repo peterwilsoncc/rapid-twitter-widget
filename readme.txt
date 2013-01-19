@@ -6,8 +6,6 @@ Requires at least: 3.4.2
 Tested up to: 
 License: GPLv2
 
-THIS IS INCOMPLETE AND DOES NOT WORK YET!
-
 Display tweets from one or more Twitter accounts a WordPress widget.
 
 == Description ==
