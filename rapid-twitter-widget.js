@@ -232,7 +232,8 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	
 	
 	forEach (apis, function (api) {
-		script_source = 'http://api.twitter.com/1/statuses/user_timeline.json?';
+		script_source = ('https:' == document.location.protocol ? 'https:' : 'http:');
+		script_source += '//api.twitter.com/1/statuses/user_timeline.json?';
 
 		script_source += 'count=';
 		script_source += api.count;
