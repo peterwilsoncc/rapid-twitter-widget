@@ -12,7 +12,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 		for (var k=0; k<data.length; k++) {
-			var the_text = '', the_date, the_username;
+			var the_text = '', the_date, the_screen_name;
 			if (typeof data[k].retweeted_status == 'undefined') {
 				the_text += linkify_tweet(data[k].text);
 				the_date = relative_time(data[k].created_at);
