@@ -1,12 +1,12 @@
 RapidTwitter= RapidTwitter || {};
 
 RapidTwitter.script = function(RapidTwitter, window, document) {
-	var widgets = RapidTwitter.widgets,
+	var apis = RapidTwitter.apis,
 		s, i,script_source;
 	
-	function callback(widget, data) {
+	function callback(api, data) {
 		// data = window.data;
-		var ids = widget.widgets,
+		var ids = api.widgets,
 			ids_el = ids.length,
 			the_html = '';
 
@@ -171,25 +171,25 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	};
 	
 	
-	forEach (widgets, function kitten(widget) {
+	forEach (apis, function kitten(api) {
 		script_source = 'http://api.twitter.com/1/statuses/user_timeline.json?';
 
 		script_source += 'count=';
-		script_source += widget.count;
+		script_source += api.count;
 		script_source += '&';
 		script_source += 'screen_name=';
-		script_source += widget.screen_name;
+		script_source += api.screen_name;
 		script_source += '&';
 		script_source += 'exclude_replies=';
-		script_source += widget.exclude_replies;
+		script_source += api.exclude_replies;
 		script_source += '&';
 		script_source += 'include_rts=';
-		script_source += widget.include_rts;
+		script_source += api.include_rts;
 		script_source += '&';
-		script_source += 'callback=RapidTwitter.callback.' + widget.ref + '';
+		script_source += 'callback=RapidTwitter.callback.' + api.ref + '';
 
 
-		RapidTwitter.callback[widget.ref] = function(data) {callback(widget,data);};
+		RapidTwitter.callback[api.ref] = function(data) {callback(api,data);};
 
 		var tw = document.createElement('script');
 		tw.type = 'text/javascript';
