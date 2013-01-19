@@ -10,24 +10,24 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			the_html = '';
 
 
-		for (var k=0; k<tweets.length; k++) {
+		for (var i=0; i<tweets.length; i++) {
 			var the_text = '', the_date, the_screen_name, tweet_id;
-			if (typeof tweets[k].retweeted_status == 'undefined') {
-				the_text += tweets[k].text;
+			if (typeof tweets[i].retweeted_status == 'undefined') {
+				the_text += tweets[i].text;
 				
-				the_date = tweets[k].created_at;
-				the_screen_name = tweets[k].user.screen_name;
-				tweet_id = tweets[k].id_str;
+				the_date = tweets[i].created_at;
+				the_screen_name = tweets[i].user.screen_name;
+				tweet_id = tweets[i].id_str;
 			}
 			else {
 				//this ensures the text isn't truncated by long user names
 				the_text += 'RT ';
-				the_text += '@' + tweets[k].retweeted_status.user.screen_name;
+				the_text += '@' + tweets[i].retweeted_status.user.screen_name;
 				the_text += ': ';
-				the_text += tweets[k].retweeted_status.text;
-				the_date = tweets[k].retweeted_status.created_at;
-				the_screen_name = tweets[k].retweeted_status.user.screen_name
-				tweet_id = tweets[k].retweeted_status.id_str;
+				the_text += tweets[i].retweeted_status.text;
+				the_date = tweets[i].retweeted_status.created_at;
+				the_screen_name = tweets[i].retweeted_status.user.screen_name
+				tweet_id = tweets[i].retweeted_status.id_str;
 			}
 
 
