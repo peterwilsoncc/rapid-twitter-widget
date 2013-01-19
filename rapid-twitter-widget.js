@@ -11,34 +11,40 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 		for (var i=0; i<tweets.length; i++) {
-			var use_tweet = tweets[i];
+			var use_tweet = tweets[i], 
+				rt_html = '',
+				classes = ['tweet'];
 
 
-			the_html += '<li class="tweet">';
 
 			if (typeof use_tweet.retweeted_status != 'undefined') {
 				use_tweet = use_tweet.retweeted_status;
+				classes.push('tweet--retweet');
 				
-				the_html += 'RT ';
-				the_html += '<a href="';
-				the_html += 'https://twitter.com/';
-				the_html += use_tweet.user.screen_name;
-				the_html += '" class="twitter-atreply">';
-				the_html += '<s>@</s>';
-				the_html += '<b>';
-				the_html += use_tweet.user.screen_name;
-				the_html += '</b>';
-				the_html += '</a>';
-				the_html += ': ';
+				rt_html += 'RT ';
+				rt_html += '<a href="';
+				rt_html += 'https://twitter.com/';
+				rt_html += use_tweet.user.screen_name;
+				rt_html += '" class="tweet__mention tweet__mention--retweet">';
+				rt_html += '<span>@</span>';
+				rt_html += use_tweet.user.screen_name;
+				rt_html += '</a>';
+				rt_html += ': ';
+			}
+			
+			if (use_tweet.in_reply_to_screen_name != null) {
+				classes.push('tweet--reply');
 			}
 
-
+			the_html += '<li class="';
+			the_html += classes.join(' ');
+			the_html += '">';
+			the_html += rt_html;
 			the_html += process_entities(use_tweet);
 			
 			
 			the_html += ' ';
-			the_html += '<span class="timesince">';
-			the_html += '<a href="';
+			the_html += '<a class="tweet__datestamp" href="';
 			the_html += 'https://twitter.com/';
 			the_html += use_tweet.user.screen_name;
 			the_html += '/status/';
@@ -46,7 +52,6 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			the_html += '">';
 			the_html += relative_time(use_tweet.created_at);
 			the_html += '</a>';
-			the_html += '</span>';
 			the_html += '</li>';
 		}
 
@@ -122,16 +127,16 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 					text: function () {
 						switch (key) {
 							case 'media':
-								return '<a href="' + elem.url + '" class="twitter-timeline-link" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>';
+								return '<a href="' + elem.url + '" class="tweet__media" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>';
 								break;
 							case 'urls':
-								return (elem.display_url)? '<a href="' + elem.url + '" class="twitter-timeline-link" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>': elem.url;
+								return (elem.display_url)? '<a href="' + elem.url + '" class="tweet__link" title="' + elem.expanded_url + '" target="_blank">' + elem.display_url + '</a>': elem.url;
 								break;
 							case 'user_mentions':
-								return '<a href="http://twitter.com/' + elem.screen_name + '" class="twitter-atreply" target="_blank"><s>@</s><b>' + elem.screen_name + '</b></a>';
+								return '<a href="http://twitter.com/' + elem.screen_name + '" class="tweet__mention" target="_blank"><span>@</span>' + elem.screen_name + '</a>';
 								break;
 							case 'hashtags':
-								return '<a href="http://twitter.com/search?q=%23' + elem.text + '" class="twitter-hashtag" target="_blank"><s>#</s><b>' + elem.text + '</b></a>';
+								return '<a href="http://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag" target="_blank"><span>#</span>' + elem.text + '</a>';
 								break;
 							default:
 								return '';
