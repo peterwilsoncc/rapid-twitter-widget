@@ -11,12 +11,13 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 		for (var k=0; k<tweets.length; k++) {
-			var the_text = '', the_date, the_screen_name;
+			var the_text = '', the_date, the_screen_name, tweet_id;
 			if (typeof tweets[k].retweeted_status == 'undefined') {
 				the_text += tweets[k].text;
 				
 				the_date = tweets[k].created_at;
 				the_screen_name = tweets[k].user.screen_name;
+				tweet_id = tweets[k].id_str;
 			}
 			else {
 				//this ensures the text isn't truncated by long user names
@@ -26,6 +27,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 				the_text += tweets[k].retweeted_status.text;
 				the_date = tweets[k].retweeted_status.created_at;
 				the_screen_name = tweets[k].retweeted_status.user.screen_name
+				tweet_id = tweets[k].retweeted_status.id_str;
 			}
 
 
@@ -39,7 +41,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			the_html += 'https://twitter.com/';
 			the_html += the_screen_name;
 			the_html += '/status/';
-			the_html += tweets[k].id_str;
+			the_html += tweet_id;
 			the_html += '">';
 			the_html += relative_time(the_date);
 			the_html += '</a>';
