@@ -55,10 +55,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			var elements_length = elements.length;
 
 			for (var j = 0; j < elements_length; j++) {
-				var el = elements[j];
+				var el = elements[j],
+					ul = document.createElement('ul');
 				removeClass(el, 'rapid-twitter--hidden');
 				
-				var ul = document.createElement('ul');
 				ul.className = 'tweets';
 				ul.innerHTML = the_html;
 				el.appendChild(ul);
