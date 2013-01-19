@@ -4,27 +4,27 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	var apis = RapidTwitter.apis,
 		s, i,script_source;
 	
-	function callback(api, data) {
+	function callback(api, tweets) {
 		var ids = api.widgets,
 			ids_el = ids.length,
 			the_html = '';
 
 
-		for (var k=0; k<data.length; k++) {
+		for (var k=0; k<tweets.length; k++) {
 			var the_text = '', the_date, the_screen_name;
-			if (typeof data[k].retweeted_status == 'undefined') {
-				the_text += linkify_tweet(data[k].text);
-				the_date = relative_time(data[k].created_at);
-				the_screen_name = data[k].user.screen_name;
+			if (typeof tweets[k].retweeted_status == 'undefined') {
+				the_text += linkify_tweet(tweets[k].text);
+				the_date = relative_time(tweets[k].created_at);
+				the_screen_name = tweets[k].user.screen_name;
 			}
 			else {
 				//this ensures the text isn't truncated by long user names
 				the_text += 'RT ';
-				the_text += linkify_tweet('@' + data[k].retweeted_status.user.screen_name);
+				the_text += linkify_tweet('@' + tweets[k].retweeted_status.user.screen_name);
 				the_text += ': ';
-				the_text += linkify_tweet(data[k].retweeted_status.text);
-				the_date = relative_time(data[k].retweeted_status.created_at);
-				the_screen_name = data[k].retweeted_status.user.screen_name
+				the_text += linkify_tweet(tweets[k].retweeted_status.text);
+				the_date = relative_time(tweets[k].retweeted_status.created_at);
+				the_screen_name = tweets[k].retweeted_status.user.screen_name
 			}
 
 
@@ -38,7 +38,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			the_html += 'https://twitter.com/';
 			the_html += the_screen_name;
 			the_html += '/status/';
-			the_html += data[k].id_str;
+			the_html += tweets[k].id_str;
 			the_html += '">';
 			the_html += the_date;
 			the_html += '</a>';
@@ -188,7 +188,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		script_source += 'callback=RapidTwitter.callback.' + api.ref + '';
 
 
-		RapidTwitter.callback[api.ref] = function(data) {callback(api,data);};
+		RapidTwitter.callback[api.ref] = function(tweets) {callback(api,tweets);};
 
 		var tw = document.createElement('script');
 		tw.type = 'text/javascript';
