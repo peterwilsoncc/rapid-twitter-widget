@@ -129,11 +129,12 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 	function relative_time(time_value) {
-		var the_date = new Date(time_value);
-	   var parsed_date = Date.parse(time_value);
-
-	   var relative_to = (arguments.length > 1) ? arguments[1] : new Date();
-	   var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
+		var split_date = time_value.split(" ");
+		var the_date = new Date(split_date[1] + " " + split_date[2] + ", " + split_date[5] + " " + split_date[3] + " UTC");
+		
+		var relative_to = new Date();
+		
+	   var delta = (relative_to.getTime() - the_date.getTime()) / 1000;
 
 	   if(delta < 60) {
 	       return 'less than a minute ago';
@@ -151,7 +152,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 			    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 			return the_date.getDate() + ' ' + monthNames[the_date.getMonth()];
-	       //return (parseInt(delta / 86400)).toString() + ' days ago';
+	       // return (parseInt(delta / 86400)).toString() + ' days ago';
 	   }
 	}
 	
