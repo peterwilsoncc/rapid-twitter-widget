@@ -52,23 +52,23 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		for (var i=0; i<ids_el; i++) {
 			var list;
 			if (document.getElementsByClassName) {
-                list = document.getElementsByClassName(ids[i]);
-            }
-            else if (document.querySelectorAll) {
-                list = document.querySelectorAll('.' + ids[i]);
-            }
-            else {
-                var all = document.getElementsByTagName('*'),
-                    all_length = all.length,
-                    regexp = new RegExp('(\\s|^)'+ids[i]+'(\\s|$)');
-                list = new Array();
-                for (var j = 0; j < all_length; j++) {
-                    var el = all[j];
-                    if ( regexp.test(el.className) ) {
-                        list.push(el);
-                    }
-                }
-            } 
+				list = document.getElementsByClassName(ids[i]);
+			}
+			else if (document.querySelectorAll) {
+				list = document.querySelectorAll('.' + ids[i]);
+			}
+			else {
+				var all = document.getElementsByTagName('*'),
+					all_length = all.length,
+					regexp = new RegExp('(\\s|^)'+ids[i]+'(\\s|$)');
+				list = new Array();
+				for (var j = 0; j < all_length; j++) {
+					var el = all[j];
+					if ( regexp.test(el.className) ) {
+						list.push(el);
+					}
+				}
+			}
             
 			
 			var regexp = new RegExp('(\\s|^)'+'rapid-twitter--hidden'+'(\\s|$)'),
@@ -83,9 +83,6 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 				ul.innerHTML = the_html;
 				el.appendChild(ul);
 			}
-			
-			
-			
 		}
 	}
 	RapidTwitter.callback = callback;
@@ -94,29 +91,33 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	function relative_time(time_value) {
 		var split_date = time_value.split(" ");
 		var the_date = new Date(split_date[1] + " " + split_date[2] + ", " + split_date[5] + " " + split_date[3] + " UTC");
-		
 		var relative_to = new Date();
+		var delta = (relative_to.getTime() - the_date.getTime()) / 1000;
 		
-	   var delta = (relative_to.getTime() - the_date.getTime()) / 1000;
-
-	   if(delta < 60) {
-	       return 'less than a minute ago';
-	   } else if(delta < 120) {
-	       return 'about a minute ago';
-	   } else if(delta < (45*60)) {
-	       return (parseInt(delta / 60)).toString() + ' minutes ago';
-	   } else if(delta < (90*60)) {
-	           return 'about an hour ago';
-	       } else if(delta < (24*60*60)) {
-	       return 'about ' + (parseInt(delta / 3600)).toString() + ' hours ago';
-	   } else if(delta < (48*60*60)) {
-	       return '1 day ago';
-	   } else {
+		if(delta < 60) {
+			return 'less than a minute ago';
+		}
+		else if(delta < 120) {
+			return 'about a minute ago';
+		}
+		else if(delta < (45*60)) {
+			return (parseInt(delta / 60)).toString() + ' minutes ago';
+		}
+		else if(delta < (90*60)) {
+			return 'about an hour ago';
+		}
+		else if(delta < (24*60*60)) {
+			return 'about ' + (parseInt(delta / 3600)).toString() + ' hours ago';
+		}
+		else if(delta < (48*60*60)) {
+			return '1 day ago';
+		}
+		else {
 			var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-			    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 			return the_date.getDate() + ' ' + monthNames[the_date.getMonth()];
-	       // return (parseInt(delta / 86400)).toString() + ' days ago';
-	   }
+			// return (parseInt(delta / 86400)).toString() + ' days ago';
+		}
 	}
 	
 	function linkify_tweet(tweet) {
@@ -135,30 +136,33 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	//source: http://dean.edwards.name/weblog/2006/07/enum/
 	// generic enumeration
 	Function.prototype.forEach = function(object, block, context) {
-	  for (var key in object) {
-	    if (typeof this.prototype[key] == "undefined") {
-	      block.call(context, object[key], key, object);
-	    }
-	  }
+		for (var key in object) {
+			if (typeof this.prototype[key] == "undefined") {
+				block.call(context, object[key], key, object);
+			}
+		}
 	};
 
 	// globally resolve forEach enumeration
 	var forEach = function(object, block, context) {
-	  if (object) {
-	    var resolve = Object; // default
-	    if (object instanceof Function) {
-	      // functions have a "length" property
-	      resolve = Function;
-	    } else if (object.forEach instanceof Function) {
-	      // the object implements a custom forEach method so use that
-	      object.forEach(block, context);
-	      return;
-	    } else if (typeof object.length == "number") {
-	      // the object is array-like
-	      resolve = Array;
-	    }
-	    resolve.forEach(object, block, context);
-	  }
+		if (object) {
+			var resolve = Object; // default
+			if (object instanceof Function) {
+				
+				// functions have a "length" property
+				resolve = Function;
+			} 
+			else if (object.forEach instanceof Function) {
+				// the object implements a custom forEach method so use that
+				object.forEach(block, context);
+				return;
+			}
+			else if (typeof object.length == "number") {
+				// the object is array-like
+				resolve = Array;
+			}
+			resolve.forEach(object, block, context);
+		}
 	};
 	
 	
