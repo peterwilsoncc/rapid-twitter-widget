@@ -2,9 +2,7 @@ RapidTwitter= RapidTwitter || {};
 
 RapidTwitter.script = function(RapidTwitter, window, document) {
 	var widgets = RapidTwitter.widgets,
-		widget_length = widgets.length,
-		scripts = {},
-		s, i, widget,script_name,script_source, scripts_length,script;
+		s, i,script_source;
 	
 	function callback(widget, data) {
 		// data = window.data;
