@@ -133,7 +133,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 								return (elem.display_url)? '<a href="' + elem.url + '" class="tweet__link" title="' + elem.expanded_url + '">' + elem.display_url + '</a>': elem.url;
 								break;
 							case 'user_mentions':
-								reply_class = (elem.indices[0] == 0) ? ' tweet__mention--reply' : '';
+								var reply_class = (elem.indices[0] == 0) ? ' tweet__mention--reply' : '';
 								return '<a href="https://twitter.com/' + elem.screen_name + '" class="tweet__mention'+reply_class+'"><span>@</span>' + elem.screen_name + '</a>';
 								break;
 							case 'hashtags':
