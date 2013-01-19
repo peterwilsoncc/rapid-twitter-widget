@@ -14,7 +14,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 	static $inlinecssout;
 
 	function Rapid_Twitter_Widget() {
-		$widget_ops = array('classname' => 'rapid-twitter rapid-twitter--hidden js-rapid-twitter', 'description' => __( 'Display your tweets from Twitter') );
+		$widget_ops = array('classname' => 'widget_twitter widget_twitter--hidden', 'description' => __( 'Display your tweets from Twitter') );
 		parent::WP_Widget('rapid-twitter', __('Twitter'), $widget_ops);
 	}
 
@@ -91,7 +91,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$include_retweets = (bool) $instance['includeretweets'] ? 'true' : 'false';
 		
 		if ( $this->inlinecssout !== true ) {
-			echo '<style>.rapid-twitter--hidden{display:none;}</style>';
+			echo '<style>.widget_twitter--hidden{display:none;}</style>';
 			$this->inlinecssout = true;
 		}
 		echo $before_widget;
