@@ -148,7 +148,7 @@ add_action( 'wp_enqueue_scripts', 'rapid_twitter_widget_script' );
 function rapid_twitter_widget_script() {
 	wp_register_script(
 		'rapid-twitter-widget',
-		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget-min.js",
+		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget.js",
 		null,
 		'1.0',
 		true
