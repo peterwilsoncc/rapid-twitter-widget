@@ -50,26 +50,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 			
 		for (var i=0; i<ids_el; i++) {
-			var list;
-			if (document.getElementsByClassName) {
-				list = document.getElementsByClassName(ids[i]);
-			}
-			else if (document.querySelectorAll) {
-				list = document.querySelectorAll('.' + ids[i]);
-			}
-			else {
-				var all = document.getElementsByTagName('*'),
-					all_length = all.length,
-					regexp = new RegExp('(\\s|^)'+ids[i]+'(\\s|$)');
-				list = new Array();
-				for (var j = 0; j < all_length; j++) {
-					var el = all[j];
-					if ( regexp.test(el.className) ) {
-						list.push(el);
-					}
-				}
-			}
-            
+            list = getElementsByClass(ids[i]);
 			
 			var regexp = new RegExp('(\\s|^)'+'rapid-twitter--hidden'+'(\\s|$)'),
 				elements_length = list.length;
@@ -129,7 +110,29 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		return tweet;
  	}
     
-
+	function getElementsByClass(get_class_name) {
+		var list;
+		if (document.getElementsByClassName) {
+			list = document.getElementsByClassName(get_class_name);
+		}
+		else if (document.querySelectorAll) {
+			list = document.querySelectorAll('.' + get_class_name);
+		}
+		else {
+			var all = document.getElementsByTagName('*'),
+				all_length = all.length,
+				regexp = new RegExp('(\\s|^)'+get_class_name+'(\\s|$)');
+			list = new Array();
+			for (var j = 0; j < all_length; j++) {
+				var el = all[j];
+				if ( regexp.test(el.className) ) {
+					list.push(el);
+				}
+			}
+		}
+		
+		return list;
+	}
 
 
 
