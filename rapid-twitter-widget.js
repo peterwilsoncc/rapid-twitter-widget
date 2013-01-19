@@ -15,7 +15,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			if (typeof tweets[k].retweeted_status == 'undefined') {
 				the_text += tweets[k].text;
 				
-				the_date = relative_time(tweets[k].created_at);
+				the_date = tweets[k].created_at;
 				the_screen_name = tweets[k].user.screen_name;
 			}
 			else {
@@ -24,7 +24,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 				the_text += '@' + tweets[k].retweeted_status.user.screen_name;
 				the_text += ': ';
 				the_text += tweets[k].retweeted_status.text;
-				the_date = relative_time(tweets[k].retweeted_status.created_at);
+				the_date = tweets[k].retweeted_status.created_at;
 				the_screen_name = tweets[k].retweeted_status.user.screen_name
 			}
 
@@ -41,7 +41,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			the_html += '/status/';
 			the_html += tweets[k].id_str;
 			the_html += '">';
-			the_html += the_date;
+			the_html += relative_time(the_date);
 			the_html += '</a>';
 			the_html += '</span>';
 			the_html += '</li>';
