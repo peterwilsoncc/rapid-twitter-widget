@@ -134,10 +134,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 								break;
 							case 'user_mentions':
 								reply_class = (elem.indices[0] == 0) ? ' tweet__mention--reply' : '';
-								return '<a href="http://twitter.com/' + elem.screen_name + '" class="tweet__mention'+reply_class+'"><span>@</span>' + elem.screen_name + '</a>';
+								return '<a href="https://twitter.com/' + elem.screen_name + '" class="tweet__mention'+reply_class+'"><span>@</span>' + elem.screen_name + '</a>';
 								break;
 							case 'hashtags':
-								return '<a href="http://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag"><span>#</span>' + elem.text + '</a>';
+								return '<a href="https://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag"><span>#</span>' + elem.text + '</a>';
 								break;
 							default:
 								return '';
