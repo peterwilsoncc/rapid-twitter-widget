@@ -110,27 +110,27 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
  	}
     
 	function getElementsByClass(get_class_name) {
-		var list;
+		var elements;
 		if (document.getElementsByClassName) {
-			list = document.getElementsByClassName(get_class_name);
+			elements = document.getElementsByClassName(get_class_name);
 		}
 		else if (document.querySelectorAll) {
-			list = document.querySelectorAll('.' + get_class_name);
+			elements = document.querySelectorAll('.' + get_class_name);
 		}
 		else {
 			var all = document.getElementsByTagName('*'),
 				all_length = all.length,
 				regexp = new RegExp('(\\s|^)'+get_class_name+'(\\s|$)');
-			list = new Array();
+			elements = new Array();
 			for (var j = 0; j < all_length; j++) {
 				var el = all[j];
 				if ( regexp.test(el.className) ) {
-					list.push(el);
+					elements.push(el);
 				}
 			}
 		}
 		
-		return list;
+		return elements;
 	}
 
 	function removeClass(element, class_name) {
