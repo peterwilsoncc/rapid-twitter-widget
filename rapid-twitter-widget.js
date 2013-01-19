@@ -173,7 +173,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	};
 	
 	
-	forEach (apis, function kitten(api) {
+	forEach (apis, function (api) {
 		script_source = 'http://api.twitter.com/1/statuses/user_timeline.json?';
 
 		script_source += 'count=';
