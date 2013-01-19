@@ -99,20 +99,38 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo $before_title;
 		echo "<a href='" . esc_url( "http://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
 		echo $after_title;
+		
+		$numbers = array('1','2','3','4', '5', '6', '7', '8', '9', '0');
+		$letters = array('a','b','c','d', 'e', 'f', 'g', 'h', 'i', 'j');
+		
+		$url_ref = '';
+		$url_ref .= str_replace($numbers, $letters, $show) . '__';
+		$url_ref .= $hidereplies . '__';
+		$url_ref .= $include_retweets . '__';
+		$url_ref .= $account . '';
 
 		echo $after_widget;
 		echo '<script>';
 		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
-		echo 'RapidTwitter={};RapidTwitter.widgets=[]';
+		echo 'RapidTwitter={};RapidTwitter.widgets={};';
 		echo '}';
-		echo 'RapidTwitter.widgets.push({';
-		echo 'widget:\'' . esc_js($widget_id) . '\'';
-		echo ',screen_name:\'' . esc_js($account) . '\'';
-		echo ',count:\'' . esc_js($show) . '\'';
-		echo ',exclude_replies:\'' . esc_js($hidereplies) . '\'';
-		echo ',include_rts:\'' . esc_js($include_retweets) . '\'';
-		echo ',beforetimesince:\'' . esc_js($before_timesince) . '\'';
-		echo '});';
+
+		echo 'if(typeof(RapidTwitter.widgets[\'' . $url_ref . '\'])==\'undefined\'){';
+		echo 'RapidTwitter.widgets[\'' . $url_ref . '\']={';
+			echo 'ref: \'' . esc_js($url_ref) . '\'';
+			echo ',screen_name:\'' . esc_js($account) . '\'';
+			echo ',count:\'' . esc_js($show) . '\'';
+			echo ',exclude_replies:\'' . esc_js($hidereplies) . '\'';
+			echo ',include_rts:\'' . esc_js($include_retweets) . '\'';
+			echo ',beforetimesince:\'' . esc_js($before_timesince) . '\'';
+			echo ',widgets: []';
+		echo '};';
+		echo '}';
+		
+		
+		
+		
+		echo 'RapidTwitter.widgets[\'' . $url_ref . '\'].widgets.push(\'' . esc_js($widget_id) . '\');';
 		echo '</script>';
 		wp_enqueue_script( 'rapid-twitter-widget' );
 		
