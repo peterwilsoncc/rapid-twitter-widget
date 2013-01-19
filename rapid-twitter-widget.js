@@ -69,10 +69,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 	function relative_time(time_value) {
-		var split_date = time_value.split(" ");
-		var the_date = new Date(split_date[1] + " " + split_date[2] + ", " + split_date[5] + " " + split_date[3] + " UTC");
-		var now = new Date();
-		var delta = (now.getTime() - the_date.getTime()) / 1000;
+		var split_date = time_value.split(" "),
+			the_date = new Date(split_date[1] + " " + split_date[2] + ", " + split_date[5] + " " + split_date[3] + " UTC"),
+			now = new Date(),
+			delta = (now.getTime() - the_date.getTime()) / 1000;
 		
 		if(delta < 60) {
 			return 'less than a minute ago';
