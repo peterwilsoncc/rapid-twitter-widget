@@ -15,11 +15,26 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 				rt_html = '',
 				classes = ['tweet'];
 
-
+			if (typeof use_tweet.user.screen_name == 'undefined') {
+				use_tweet.user.screen_name = api.screen_name;
+			}
 
 			if (typeof use_tweet.retweeted_status != 'undefined') {
 				use_tweet = use_tweet.retweeted_status;
 				classes.push('tweet--retweet');
+
+				if (typeof use_tweet.user.screen_name == 'undefined') {
+					var mentions = tweets[i].entities.user_mentions,
+						mentions_length = mentions.length,
+						mention_position = 256; //any number over 140 works
+					for (var j=0; j<mentions_length; j++) {
+						if (mentions[j].indices[0] < mention_position) {
+							mention_position = mentions[j].indices[0];
+							use_tweet.user.screen_name = mentions[j].screen_name;
+						}
+					}
+				}
+
 				
 				rt_html += 'RT ';
 				rt_html += '<a href="';
