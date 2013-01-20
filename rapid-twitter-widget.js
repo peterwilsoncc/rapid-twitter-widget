@@ -5,6 +5,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		s, i,script_source;
 	
 	function callback(api, tweets) {
+		if ( typeof tweets.error != 'undefined' ) {
+			return;
+		}
+		
 		var ids = api.widgets,
 			ids_el = ids.length,
 			the_html = '';
@@ -266,6 +270,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		script_source += 'true';
 		script_source += '&';
 		script_source += 'trim_user=';
+		script_source += 'true';
+		script_source += '&';
+		script_source += 'suppress_response_codes=';
 		script_source += 'true';
 		script_source += '&';
 		script_source += 'callback=RapidTwitter.callback.' + api.ref + '';
