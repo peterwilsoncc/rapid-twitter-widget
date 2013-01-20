@@ -9,6 +9,8 @@ Author URI:
 License: GPLv2
 */
 
+define('RAPID_TWITTER_WIDGET_VERSION', '0.2');
+
 class Rapid_Twitter_Widget extends WP_Widget {
 	
 	static $inlinecssout;
