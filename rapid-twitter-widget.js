@@ -59,7 +59,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			
 			
 			the_html += ' ';
-			the_html += '<a class="tweet__datestamp" href="';
+			the_html += '<a class="tweet__datestamp timesince" href="';
 			the_html += 'https://twitter.com/';
 			the_html += use_tweet.user.screen_name;
 			the_html += '/status/';
