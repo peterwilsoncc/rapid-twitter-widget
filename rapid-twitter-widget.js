@@ -9,8 +9,8 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			return;
 		}
 		
-		var ids = api.widgets,
-			ids_el = ids.length,
+		var widgets = api.widgets,
+			widgets_len = widgets.length,
 			the_html = '';
 
 
@@ -76,20 +76,14 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 			
-		for (var i=0; i<ids_el; i++) {
-            elements = getElementsByClass(ids[i]);
+		for (var i=0; i<widgets_len; i++) {
+			var element = widgets[i],
+				ul = document.createElement('ul');
+			removeClass(element, 'widget_twitter--hidden');
 			
-			var elements_length = elements.length;
-
-			for (var j = 0; j < elements_length; j++) {
-				var element = elements[j],
-					ul = document.createElement('ul');
-				removeClass(element, 'widget_twitter--hidden');
-				
-				ul.className = 'tweets';
-				ul.innerHTML = the_html;
-				element.appendChild(ul);
-			}
+			ul.className = 'tweets';
+			ul.innerHTML = the_html;
+			element.appendChild(ul);
 		}
 	}
 	RapidTwitter.callback = callback;
