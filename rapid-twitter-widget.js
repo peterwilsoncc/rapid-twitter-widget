@@ -173,15 +173,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		result[result.length] = tweet.text.substring(lastIndex);
 		return result.join('');
 	}	
-	function linkify_tweet(text) {
-		var link_exp = /(^|\s)(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-		text = text.replace(link_exp, " <a href='$2'>$2</a> ");
-		text = text.replace(/(^|\s|.)@(\w+)/g, " $1<a href=\"https://twitter.com/$2\">@$2</a> ");
-		text = text.replace(/(^|\s)#(\w+)/g, " $1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a> ");
-		text = text.replace(/(^|\s)\$([A-Za-z]+)/g, " $1<a href=\"https://twitter.com/search?q=%24$2&src=ctag\">&#36;$2</a> ");
-		return text;
- 	}
-    
+
 	function removeClass(element, class_name) {
 		var regexp = new RegExp('(\\s|^)'+class_name+'(\\s|$)');
 		element.className = element.className.replace(regexp, ' ');
