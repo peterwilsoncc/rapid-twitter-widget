@@ -1,7 +1,7 @@
 === Rapid Twitter Widget ===
 Contributors: peterwilsoncc, floatedesign
 Tags: twitter, widget, tweets
-Stable tag: 0.3.2
+Stable tag: 0.3.3
 Requires at least: 3.4.2
 Tested up to: 3.5
 License: GPLv2
@@ -59,6 +59,11 @@ nicely [summarised by Nicolas Gallagher](https://gist.github.com/1309546).
 They're a little strange at first but I find them surprisingly useful. 
 
 == Changelog ==
+
+= 0.3.3 =
+
+* Store the widget HTML element on page load. Earlier version presumed
+  class names that may not exist.
 
 = 0.3.2 =
 
