@@ -81,6 +81,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '</select>';
 		echo '</p>';
 
+		//Hide Reploes
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id('hidereplies') . '">';
 		echo '<input id="' . $this->get_field_id('hidereplies') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('hidereplies') . '"';
@@ -90,6 +91,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '</label>';
 		echo '</p>';
 
+		//Include Retweets
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id('includeretweets') . '"><input id="' . $this->get_field_id('includeretweets') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('includeretweets') . '"';
 		if ( $include_retweets )
