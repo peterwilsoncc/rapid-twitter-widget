@@ -127,7 +127,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo $before_widget;
 
 		echo $before_title;
-		echo "<a href='" . esc_url( "http://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
+		echo "<a href='" . esc_url( "https://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
 		echo $after_title;
 		
 		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
