@@ -12,7 +12,9 @@ License: GPLv2
 define('RAPID_TWITTER_WIDGET_VERSION', '0.3.3');
 
 class Rapid_Twitter_Widget extends WP_Widget {
-	
+
+
+
 	static $inlinecssout;
 
 	function Rapid_Twitter_Widget() {
@@ -25,6 +27,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 
 		$instance['account'] = trim( strip_tags( stripslashes( $new_instance['account'] ) ) );
 		$instance['account'] = str_replace('http://twitter.com/', '', $instance['account']);
+		$instance['account'] = str_replace('https://twitter.com/', '', $instance['account']);
 		$instance['account'] = str_replace('/', '', $instance['account']);
 		$instance['account'] = str_replace('@', '', $instance['account']);
 		$instance['account'] = str_replace('#!', '', $instance['account']); // account for the Ajax URI
@@ -158,6 +161,6 @@ function rapid_twitter_widget_script() {
 		RAPID_TWITTER_WIDGET_VERSION,
 		true
 	);
-	
+
 }
 ?>
