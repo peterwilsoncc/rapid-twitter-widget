@@ -13,8 +13,6 @@ define('RAPID_TWITTER_WIDGET_VERSION', '0.3.3');
 
 class Rapid_Twitter_Widget extends WP_Widget {
 
-	static $inlinecssout;
-
 	function Rapid_Twitter_Widget() {
 		$widget_ops = array(
 			'classname'   => 'widget_twitter widget_twitter--hidden',
@@ -83,7 +81,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '</select>';
 		echo '</p>';
 
-		//Hide Replies
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id('hidereplies') . '">';
 		echo '<input id="' . $this->get_field_id('hidereplies') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('hidereplies') . '"';
@@ -93,7 +90,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '</label>';
 		echo '</p>';
 
-		//Include Retweets
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id('includeretweets') . '"><input id="' . $this->get_field_id('includeretweets') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('includeretweets') . '"';
 		if ( $include_retweets )
@@ -119,15 +115,11 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		}
 		$hidereplies = (bool) $instance['hidereplies'] ? 'true' : 'false';
 		$include_retweets = (bool) $instance['includeretweets'] ? 'true' : 'false';
-		
-		if ( $this->inlinecssout !== true ) {
-			echo '<style>.widget_twitter--hidden{display:none;}</style>';
-			$this->inlinecssout = true;
-		}
+
 		echo $before_widget;
 
 		echo $before_title;
-		echo "<a href='" . esc_url( "https://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
+		echo "<a href='" . esc_url( "http://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
 		echo $after_title;
 		
 		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
@@ -178,9 +170,10 @@ function rapid_twitter_widget_script() {
 	wp_register_script(
 		'rapid-twitter-widget',
 		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget$suffix.js",
-		'',
+		null,
 		RAPID_TWITTER_WIDGET_VERSION,
 		true
 	);
 
 }
+?>
