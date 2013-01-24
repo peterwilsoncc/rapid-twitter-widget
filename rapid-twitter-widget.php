@@ -60,29 +60,47 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$include_retweets = (bool) $instance['includeretweets'];
 		$before_timesince = esc_attr( $instance['beforetimesince'] );
 
-		echo '<p><label for="' . $this->get_field_id('title') . '">' . esc_html__('Title:') . '
-		<input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />
-		</label></p>
-		<p><label for="' . $this->get_field_id('account') . '">' . esc_html__('Twitter username:') . ' 
-		<input class="widefat" id="' . $this->get_field_id('account') . '" name="' . $this->get_field_name('account') . '" type="text" value="' . $account . '" />
-		</label></p>
-		<p><label for="' . $this->get_field_id('show') . '">' . esc_html__('Maximum number of tweets to show:') . '
-			<select id="' . $this->get_field_id('show') . '" name="' . $this->get_field_name('show') . '">';
+		//Title
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id('title') . '">' . esc_html__('Title:') . '</label>';
+		echo '<input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />';
+		echo '</p>';
+
+		//Username
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id('account') . '">' . esc_html__('Twitter username:') . '</label>';
+		echo '<input class="widefat" id="' . $this->get_field_id('account') . '" name="' . $this->get_field_name('account') . '" type="text" value="' . $account . '" />';
+		echo '</p>';
+
+		//Max Tweets
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id('show') . '">' . esc_html__('Maximum number of tweets to show:') . '</label>';
+		echo '<select id="' . $this->get_field_id('show') . '" name="' . $this->get_field_name('show') . '">';
 
 		for ( $i = 1; $i <= 20; ++$i )
 			echo "<option value='$i' " . ( $show == $i ? "selected='selected'" : '' ) . ">$i</option>";
 
-		echo '		</select>
-		</label></p>
-		<p><label for="' . $this->get_field_id('hidereplies') . '"><input id="' . $this->get_field_id('hidereplies') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('hidereplies') . '"';
+		echo '</select>';
+		echo '</p>';
+
+		//Hide Replies
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id('hidereplies') . '">';
+		echo '<input id="' . $this->get_field_id('hidereplies') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('hidereplies') . '"';
 		if ( $hidereplies )
 			echo ' checked="checked"';
-		echo ' /> ' . esc_html__('Hide replies') . '</label></p>';
+		echo ' /> ' . esc_html__('Hide replies');
+		echo '</label>';
+		echo '</p>';
 
-		echo '<p><label for="' . $this->get_field_id('includeretweets') . '"><input id="' . $this->get_field_id('includeretweets') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('includeretweets') . '"';
+		//Include Retweets
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id('includeretweets') . '"><input id="' . $this->get_field_id('includeretweets') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('includeretweets') . '"';
 		if ( $include_retweets )
 			echo ' checked="checked"';
-		echo ' /> ' . esc_html__('Include retweets') . '</label></p>';
+		echo ' /> ' . esc_html__('Include retweets');
+		echo '</label>';
+		echo '</p>';
 
 		echo '<input name="' . $this->get_field_name('beforetimesince') . '" type="hidden" value=" " />';
 	}
