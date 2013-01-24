@@ -178,7 +178,7 @@ function rapid_twitter_widget_script() {
 	wp_register_script(
 		'rapid-twitter-widget',
 		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget$suffix.js",
-		null,
+		'',
 		RAPID_TWITTER_WIDGET_VERSION,
 		true
 	);
