@@ -176,4 +176,3 @@ function rapid_twitter_widget_script() {
 	);
 
 }
-?>
