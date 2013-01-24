@@ -18,7 +18,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			'classname'   => 'widget_twitter widget_twitter--hidden',
 			'description' => __( 'Display your tweets from Twitter')
 		);
-		parent::WP_Widget( 'rapid-twitter', __('Twitter'), $widget_ops );
+		parent::WP_Widget( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
 	}
 
 	function update( $new_instance, $old_instance ) {
