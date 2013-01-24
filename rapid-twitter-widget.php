@@ -13,28 +13,29 @@ define('RAPID_TWITTER_WIDGET_VERSION', '0.3.3');
 
 class Rapid_Twitter_Widget extends WP_Widget {
 
-
-
 	static $inlinecssout;
 
 	function Rapid_Twitter_Widget() {
-		$widget_ops = array('classname' => 'widget_twitter widget_twitter--hidden', 'description' => __( 'Display your tweets from Twitter') );
-		parent::WP_Widget('rapid-twitter', __('Twitter'), $widget_ops);
+		$widget_ops = array(
+			'classname'   => 'widget_twitter widget_twitter--hidden',
+			'description' => __( 'Display your tweets from Twitter')
+		);
+		parent::WP_Widget( 'rapid-twitter', __('Twitter'), $widget_ops );
 	}
 
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
 		$instance['account'] = trim( strip_tags( stripslashes( $new_instance['account'] ) ) );
-		$instance['account'] = str_replace('http://twitter.com/', '', $instance['account']);
-		$instance['account'] = str_replace('https://twitter.com/', '', $instance['account']);
-		$instance['account'] = str_replace('/', '', $instance['account']);
-		$instance['account'] = str_replace('@', '', $instance['account']);
-		$instance['account'] = str_replace('#!', '', $instance['account']); // account for the Ajax URI
-		$instance['title'] = strip_tags(stripslashes($new_instance['title']));
-		$instance['show'] = absint($new_instance['show']);
-		$instance['hidereplies'] = isset($new_instance['hidereplies']);
-		$instance['includeretweets'] = isset($new_instance['includeretweets']);
+		$instance['account'] = str_replace( 'http://twitter.com/', '', $instance['account'] );
+		$instance['account'] = str_replace( 'https://twitter.com/', '', $instance['account'] );
+		$instance['account'] = str_replace( '/', '', $instance['account'] );
+		$instance['account'] = str_replace( '@', '', $instance['account'] );
+		$instance['account'] = str_replace( '#!', '', $instance['account'] ); // account for the Ajax URI
+		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
+		$instance['show'] = absint( $new_instance['show'] );
+		$instance['hidereplies'] = isset( $new_instance['hidereplies'] );
+		$instance['includeretweets'] = isset( $new_instance['includeretweets'] );
 		$instance['beforetimesince'] = $new_instance['beforetimesince'];
 
 		return $instance;
@@ -42,16 +43,22 @@ class Rapid_Twitter_Widget extends WP_Widget {
 
 	function form( $instance ) {
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array('account' => '', 'title' => '', 'show' => 5, 'hidereplies' => false) );
+		$instance = wp_parse_args( (array) $instance,
+			array(
+				'account'     => '',
+				'title'       => '',
+				'show'        => 5,
+				'hidereplies'	=> false
+			) );
 
-		$account = esc_attr($instance['account']);
-		$title = esc_attr($instance['title']);
-		$show = absint($instance['show']);
+		$account = esc_attr( $instance['account'] );
+		$title = esc_attr( $instance['title'] );
+		$show = absint( $instance['show'] );
 		if ( $show < 1 || 20 < $show )
 			$show = 5;
 		$hidereplies = (bool) $instance['hidereplies'];
 		$include_retweets = (bool) $instance['includeretweets'];
-		$before_timesince = esc_attr($instance['beforetimesince']);
+		$before_timesince = esc_attr( $instance['beforetimesince'] );
 
 		echo '<p><label for="' . $this->get_field_id('title') . '">' . esc_html__('Title:') . '
 		<input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />
@@ -85,7 +92,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		
 		$account = trim( urlencode( $instance['account'] ) );
 		if ( empty($account) ) return;
-		$title = apply_filters('widget_title', $instance['title']);
+		$title = apply_filters( 'widget_title', $instance['title'] );
 		if ( empty($title) ) $title = __( 'Twitter Updates' );
 		$show = absint( $instance['show'] );  // # of Updates to show
 		if ( $show > 200 ) {
@@ -105,11 +112,11 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo "<a href='" . esc_url( "http://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
 		echo $after_title;
 		
-		$numbers = array('1','2','3','4', '5', '6', '7', '8', '9', '0');
-		$letters = array('a','b','c','d', 'e', 'f', 'g', 'h', 'i', 'j');
+		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
+		$letters = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' );
 		
 		$url_ref = '';
-		$url_ref .= str_replace($numbers, $letters, $show) . '__';
+		$url_ref .= str_replace( $numbers, $letters, $show ) . '__';
 		$url_ref .= $hidereplies . '__';
 		$url_ref .= $include_retweets . '__';
 		$url_ref .= $account . '';
@@ -118,22 +125,17 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
 		echo 'RapidTwitter={};RapidTwitter.apis={};';
 		echo '}';
-
 		echo 'if(typeof(RapidTwitter.apis.' . $url_ref . ')==\'undefined\'){';
 		echo 'RapidTwitter.apis.' . $url_ref . '={';
-			echo 'ref: \'' . esc_js($url_ref) . '\'';
-			echo ',screen_name:\'' . esc_js($account) . '\'';
-			echo ',count:\'' . esc_js($show) . '\'';
-			echo ',exclude_replies:\'' . esc_js($hidereplies) . '\'';
-			echo ',include_rts:\'' . esc_js($include_retweets) . '\'';
-			echo ',beforetimesince:\'' . esc_js($before_timesince) . '\'';
-			echo ',widgets: []';
+		echo 'ref: \'' . esc_js( $url_ref ) . '\'';
+		echo ',screen_name:\'' . esc_js( $account ) . '\'';
+		echo ',count:\'' . esc_js( $show ) . '\'';
+		echo ',exclude_replies:\'' . esc_js( $hidereplies ) . '\'';
+		echo ',include_rts:\'' . esc_js( $include_retweets ) . '\'';
+		echo ',beforetimesince:\'' . esc_js( $before_timesince ) . '\'';
+		echo ',widgets: []';
 		echo '};';
 		echo '}';
-		
-		
-		
-		
 		echo 'RapidTwitter.tmp = document.getElementsByTagName(\'script\');';
 		echo 'RapidTwitter.tmp = RapidTwitter.tmp[RapidTwitter.tmp.length-1];';
 		echo 'RapidTwitter.apis.' . $url_ref . '.widgets.push(RapidTwitter.tmp.parentNode);';
@@ -145,15 +147,16 @@ class Rapid_Twitter_Widget extends WP_Widget {
 
 }
 
-
 add_action( 'widgets_init', 'rapid_twitter_widget_init' );
+
 function rapid_twitter_widget_init() {
-	register_widget('Rapid_Twitter_Widget');
+	register_widget( 'Rapid_Twitter_Widget' );
 }
 
 add_action( 'wp_enqueue_scripts', 'rapid_twitter_widget_script' );
+
 function rapid_twitter_widget_script() {
-	$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '-min';
+	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '-min';
 	wp_register_script(
 		'rapid-twitter-widget',
 		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget$suffix.js",
