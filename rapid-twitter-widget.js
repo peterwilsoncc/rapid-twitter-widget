@@ -84,6 +84,8 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			ul.className = 'tweets';
 			ul.innerHTML = the_html;
 			element.appendChild(ul);
+
+			removeClass(element, 'widget_twitter--hidden');
 		}
 	}
 	RapidTwitter.callback = callback;
