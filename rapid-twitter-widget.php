@@ -132,8 +132,19 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$url_ref .= $hidereplies . '__';
 		$url_ref .= $include_retweets . '__';
 		$url_ref .= $account . '';
+		
+		$widget_ref = '';
+		$widget_ref .= $args['widget_id'];
+		$widget_ref .= '__';
+		$widget_ref .= $instance['title'];
+		$widget_ref .= '__';
+		$widget_ref .= $url_ref;
+		
+		$script_id = hash( 'md5', $widget_ref );
+		$script_id = base_convert( $script_id, 16, 36 );
+		$script_id = substr( $script_id, 0, 8 );
 
-		echo '<script>';
+		echo '<script id="' . $script_id . '">';
 		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
 		echo 'RapidTwitter={};RapidTwitter.apis={};';
 		echo '}';
