@@ -13,14 +13,31 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			widgets_len = widgets.length,
 			the_html = '';
 
+		the_html = generate_html(api.screen_name, tweets);
+			
+		for (var i=0; i<widgets_len; i++) {
+			var element = widgets[i],
+				ul = document.createElement('ul');
+			element = document.getElementById(element).parentNode;
+			
+			ul.className = 'tweets';
+			ul.innerHTML = the_html;
+			element.appendChild(ul);
 
+			removeClass(element, 'widget_twitter--hidden');
+		}
+	}
+	RapidTwitter.callback = callback;
+
+	function generate_html(screen_name, tweets){
+		var the_html = '';
 		for (var i=0; i<tweets.length; i++) {
 			var use_tweet = tweets[i], 
 				rt_html = '',
 				classes = ['tweet'];
 
 			if (typeof use_tweet.user.screen_name == 'undefined') {
-				use_tweet.user.screen_name = api.screen_name;
+				use_tweet.user.screen_name = screen_name;
 			}
 
 			if (typeof use_tweet.retweeted_status != 'undefined') {
@@ -73,22 +90,8 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			the_html += '</a>';
 			the_html += '</li>';
 		}
-
-
-			
-		for (var i=0; i<widgets_len; i++) {
-			var element = widgets[i],
-				ul = document.createElement('ul');
-			element = document.getElementById(element).parentNode;
-			
-			ul.className = 'tweets';
-			ul.innerHTML = the_html;
-			element.appendChild(ul);
-
-			removeClass(element, 'widget_twitter--hidden');
-		}
+		return the_html;
 	}
-	RapidTwitter.callback = callback;
 
 
 	function relative_time(time_value) {
