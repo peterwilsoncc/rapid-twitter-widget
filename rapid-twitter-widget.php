@@ -9,7 +9,7 @@ Author URI:
 License: GPLv2
 */
 
-define('RAPID_TWITTER_WIDGET_VERSION', '0.3.3');
+define('RAPID_TWITTER_WIDGET_VERSION', '0.4.0-alpha');
 
 class Rapid_Twitter_Widget extends WP_Widget {
 
