@@ -31,6 +31,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 	function generate_html(screen_name, tweets){
 		var the_html = '';
+		if ( typeof RapidTwitter.generate_html == 'function' ) {
+			return RapidTwitter.generate_html(screen_name, tweets);
+		}
 		for (var i=0; i<tweets.length; i++) {
 			var use_tweet = tweets[i], 
 				rt_html = '',
