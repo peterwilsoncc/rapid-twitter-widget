@@ -175,6 +175,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		result[result.length] = tweet.text.substring(lastIndex);
 		return result.join('');
 	}	
+	RapidTwitter.process_entities = process_entities;
 
 	function removeClass(element, class_name) {
 		var regexp = new RegExp('(\\s|^)'+class_name+'(\\s|$)');
