@@ -159,9 +159,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo ',widgets: []';
 		echo '};';
 		echo '}';
-		echo 'RapidTwitter.tmp = document.getElementsByTagName(\'script\');';
-		echo 'RapidTwitter.tmp = RapidTwitter.tmp[RapidTwitter.tmp.length-1];';
-		echo 'RapidTwitter.apis.' . $url_ref . '.widgets.push(RapidTwitter.tmp.parentNode);';
+		echo 'RapidTwitter.apis.' . $url_ref . '.widgets.push(\'' . $script_id . '\');';
 		echo '</script>';
 		wp_enqueue_script( 'rapid-twitter-widget' );
 		echo $after_widget;
