@@ -19,6 +19,18 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			'description' => __( 'Display your tweets from Twitter')
 		);
 		parent::WP_Widget( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
+		
+		if ( is_active_widget(false, false, $this->id_base) ) {
+			add_action( 'wp_head', array(&$this, 'rapid_twitter_widget_style') );
+		}
+	}
+	
+	function rapid_twitter_widget_style() {
+		if ( ! current_theme_supports( 'widgets' ) 
+			|| ! apply_filters( 'show_rapid_twitter_widget_style', true, $this->id_base ) ) {
+			return;
+		}
+		echo "<style>.widget_twitter--hidden{display:none!important;}</style>";
 	}
 
 	function update( $new_instance, $old_instance ) {
