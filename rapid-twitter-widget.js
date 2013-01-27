@@ -128,6 +128,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 			// return (parseInt(delta / 86400)).toString() + ' days ago';
 		}
 	}
+	RapidTwitter.relative_time = relative_time;
 	
 	// source: https://gist.github.com/1292496
 	// Takeru Suzuki
