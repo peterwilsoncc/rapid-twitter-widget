@@ -46,7 +46,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$instance['show'] = absint( $new_instance['show'] );
 		$instance['hidereplies'] = isset( $new_instance['hidereplies'] );
 		$instance['includeretweets'] = isset( $new_instance['includeretweets'] );
-		$instance['beforetimesince'] = $new_instance['beforetimesince'];
 
 		return $instance;
 	}
@@ -68,7 +67,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			$show = 5;
 		$hidereplies = (bool) $instance['hidereplies'];
 		$include_retweets = (bool) $instance['includeretweets'];
-		$before_timesince = esc_attr( $instance['beforetimesince'] );
 
 		//Title
 		echo '<p>';
@@ -111,8 +109,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo ' /> ' . esc_html__('Include retweets');
 		echo '</label>';
 		echo '</p>';
-
-		echo '<input name="' . $this->get_field_name('beforetimesince') . '" type="hidden" value=" " />';
 	}
 
 	function widget( $args, $instance ) {
@@ -167,7 +163,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo ',count:\'' . esc_js( $show ) . '\'';
 		echo ',exclude_replies:\'' . esc_js( $hidereplies ) . '\'';
 		echo ',include_rts:\'' . esc_js( $include_retweets ) . '\'';
-		echo ',beforetimesince:\'' . esc_js( $before_timesince ) . '\'';
 		echo ',widgets: []';
 		echo '};';
 		echo '}';
