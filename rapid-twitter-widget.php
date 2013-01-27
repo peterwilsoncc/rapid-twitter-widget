@@ -123,8 +123,8 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			// Twitter paginates at 200 max tweets. update() should not have accepted greater than 20
 			$show = 200;
 		}
-		$hidereplies = (bool) $instance['hidereplies'] ? 'true' : 'false';
-		$include_retweets = (bool) $instance['includeretweets'] ? 'true' : 'false';
+		$hidereplies = (bool) $instance['hidereplies'] ? 't' : 'f';
+		$include_retweets = (bool) $instance['includeretweets'] ? 't' : 'f';
 
 		echo $before_widget;
 
