@@ -3,7 +3,7 @@ Contributors: peterwilsoncc, floatedesign
 Tags: twitter, widget, tweets
 Stable tag: 0.3.3
 Requires at least: 3.4.2
-Tested up to: 3.5
+Tested up to: 3.5.1
 License: GPLv2
 
 Display tweets from one or more Twitter accounts using a WordPress widget.
