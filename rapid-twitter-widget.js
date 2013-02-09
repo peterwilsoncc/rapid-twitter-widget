@@ -2,7 +2,7 @@ RapidTwitter= RapidTwitter || {};
 
 RapidTwitter.script = function(RapidTwitter, window, document) {
 	var apis = RapidTwitter.apis,
-		s, i,script_source;
+		i;
 	
 	function callback(api, tweets) {
 		if ( typeof tweets.error != 'undefined' ) {
@@ -191,7 +191,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 
 	for (key in apis) {
-		var api = apis[key];
+		var api = apis[key],
+			tw = document.createElement('script'),
+			s, script_source;
 
 		script_source = ('https:' == document.location.protocol ? 'https:' : 'http:');
 		script_source += '//api.twitter.com/1/statuses/user_timeline.json?';
@@ -222,7 +224,6 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 
 		RapidTwitter.callback[key] = function(tweets) {callback(api,tweets);};
 
-		var tw = document.createElement('script');
 		tw.type = 'text/javascript';
 		tw.async = true;
 		tw.src = script_source;
