@@ -217,10 +217,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		script_source += 'suppress_response_codes=';
 		script_source += 't';
 		script_source += '&';
-		script_source += 'callback=RapidTwitter.callback.' + api.ref + '';
+		script_source += 'callback=RapidTwitter.callback.' + key + '';
 
 
-		RapidTwitter.callback[api.ref] = function(tweets) {callback(api,tweets);};
+		RapidTwitter.callback[key] = function(tweets) {callback(api,tweets);};
 
 		var tw = document.createElement('script');
 		tw.type = 'text/javascript';

@@ -162,8 +162,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '}';
 		echo 'if(typeof(RapidTwitter.apis.' . $url_ref . ')==\'undefined\'){';
 		echo 'RapidTwitter.apis.' . $url_ref . '={';
-		echo 'ref: \'' . esc_js( $url_ref ) . '\'';
-		echo ',screen_name:\'' . esc_js( $account ) . '\'';
+		echo 'screen_name:\'' . esc_js( $account ) . '\'';
 		echo ',count:\'' . esc_js( $show ) . '\'';
 		echo ',exclude_replies:\'' . esc_js( $hidereplies ) . '\'';
 		echo ',include_rts:\'' . esc_js( $include_retweets ) . '\'';
