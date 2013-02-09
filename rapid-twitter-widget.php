@@ -143,7 +143,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		
 		$url_ref = hash( 'md5', $url_ref );
 		$url_ref = base_convert( $url_ref, 16, 26 );
-		$url_ref = substr( $url_ref, 0, 12 );
 		$url_ref = str_replace( $numbers, $letters, $url_ref );
 		
 		
@@ -156,7 +155,6 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		
 		$script_id = hash( 'md5', $widget_ref );
 		$script_id = base_convert( $script_id, 16, 36 );
-		$script_id = substr( $script_id, 0, 8 );
 
 		echo '<script id="' . $script_id . '">';
 		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
