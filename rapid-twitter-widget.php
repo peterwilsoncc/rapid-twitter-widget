@@ -133,13 +133,19 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo $after_title;
 		
 		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
-		$letters = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' );
+		$letters = array( 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' );
 		
 		$url_ref = '';
-		$url_ref .= str_replace( $numbers, $letters, $show ) . '__';
+		$url_ref .= $show . '__';
 		$url_ref .= $hidereplies . '__';
 		$url_ref .= $include_retweets . '__';
 		$url_ref .= $account . '';
+		
+		$url_ref = hash( 'md5', $url_ref );
+		$url_ref = base_convert( $url_ref, 16, 26 );
+		$url_ref = substr( $url_ref, 0, 12 );
+		$url_ref = str_replace( $numbers, $letters, $url_ref );
+		
 		
 		$widget_ref = '';
 		$widget_ref .= $args['widget_id'];
