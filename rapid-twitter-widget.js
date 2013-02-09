@@ -189,40 +189,10 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		element.className = element.className.replace(regexp, ' ');
 	}
 
-	//source: http://dean.edwards.name/weblog/2006/07/enum/
-	// generic enumeration
-	Function.prototype.forEach = function(object, block, context) {
-		for (var key in object) {
-			if (typeof this.prototype[key] == "undefined") {
-				block.call(context, object[key], key, object);
-			}
-		}
-	};
 
-	// globally resolve forEach enumeration
-	var forEach = function(object, block, context) {
-		if (object) {
-			var resolve = Object; // default
-			if (object instanceof Function) {
-				
-				// functions have a "length" property
-				resolve = Function;
-			} 
-			else if (object.forEach instanceof Function) {
-				// the object implements a custom forEach method so use that
-				object.forEach(block, context);
-				return;
-			}
-			else if (typeof object.length == "number") {
-				// the object is array-like
-				resolve = Array;
-			}
-			resolve.forEach(object, block, context);
-		}
-	};
-	
-	
-	forEach (apis, function (api) {
+	for (key in apis) {
+		var api = apis[key];
+
 		script_source = ('https:' == document.location.protocol ? 'https:' : 'http:');
 		script_source += '//api.twitter.com/1/statuses/user_timeline.json?';
 
@@ -259,7 +229,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		s = document.getElementsByTagName('script')[0]; 
 		s.parentNode.insertBefore(tw, s);
 
-	});
-	
+
+	}
 	
 }(RapidTwitter, window, document);
