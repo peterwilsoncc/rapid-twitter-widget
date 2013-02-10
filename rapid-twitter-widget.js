@@ -190,7 +190,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 	}
 
 
-	for (key in apis) {
+	for (var key in apis) {
 		var api = apis[key],
 			tw = document.createElement('script'),
 			s, script_source;
