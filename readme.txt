@@ -1,7 +1,7 @@
 === Rapid Twitter Widget ===
 Contributors: peterwilsoncc, floatedesign
 Tags: twitter, widget, tweets
-Stable tag: 0.3.3
+Stable tag: 1.0
 Requires at least: 3.4.2
 Tested up to: 3.5.1
 License: GPLv2
