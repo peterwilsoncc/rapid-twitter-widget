@@ -1,4 +1,4 @@
-RapidTwitter= RapidTwitter || {};
+if(typeof(RapidTwitter)=='undefined'){RapidTwitter={};}
 
 RapidTwitter.script = function(RapidTwitter, window, document) {
 	var apis = RapidTwitter.apis,
