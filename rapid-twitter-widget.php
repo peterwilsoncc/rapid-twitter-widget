@@ -23,6 +23,8 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		if ( is_active_widget(false, false, $this->id_base) ) {
 			add_action( 'wp_head', array(&$this, 'rapid_twitter_widget_style') );
 		}
+		
+		add_action( 'wp_enqueue_scripts', array( &$this, 'rapid_twitter_widget_script' ) );
 	}
 	
 	function rapid_twitter_widget_style() {
@@ -31,6 +33,18 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			return;
 		}
 		echo "<style>.widget_twitter--hidden{display:none!important;}</style>";
+	}
+
+	function rapid_twitter_widget_script() {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '-min';
+		wp_register_script(
+			'rapid-twitter-widget',
+			WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget$suffix.js",
+			'',
+			RAPID_TWITTER_WIDGET_VERSION,
+			true
+		);
+
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -182,18 +196,4 @@ add_action( 'widgets_init', 'rapid_twitter_widget_init' );
 
 function rapid_twitter_widget_init() {
 	register_widget( 'Rapid_Twitter_Widget' );
-}
-
-add_action( 'wp_enqueue_scripts', 'rapid_twitter_widget_script' );
-
-function rapid_twitter_widget_script() {
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '-min';
-	wp_register_script(
-		'rapid-twitter-widget',
-		WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget$suffix.js",
-		'',
-		RAPID_TWITTER_WIDGET_VERSION,
-		true
-	);
-
 }
