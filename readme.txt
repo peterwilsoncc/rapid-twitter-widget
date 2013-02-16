@@ -10,11 +10,14 @@ Display tweets from one or more Twitter accounts using a WordPress widget.
 
 == Description ==
 
-Display the latest Tweets from your Twitter accounts inside WordPress 
-widgets. Customise Tweet displays using your site or theme CSS.
+Display your latest tweets in a WordPress widget without slowing your
+website.
 
-Tweets are loaded after the page content to ensure a delayed response from 
-Twitter doesn't slow down your website.
+The Rapid Twitter Widget doesn't apply any styling to your website, giving
+you complete control over the look.
+
+Tweets and your content are loaded separately to ensure a delayed response
+from Twitter doesn't slow down your website.
 
 Based upon Wickett Twitter Widget by Automattic (now part of Jetpack).
 
@@ -28,6 +31,26 @@ Only tagged releases will be added to the WordPress.org svn repository.
 
 
 == Frequently Asked Questions ==
+
+= Can I customise the HTML output? =
+
+Yes, you can create the JavaScript function `RapidTwitter.generate_html` and
+the Rapid Twitter Widget will defer to your custom script.
+
+Your custom function will need to be defined prior to the Rapid Twitter 
+Widget JavaScript file loading.
+
+Start your file:
+
+`if(typeof(RapidTwitter)=='undefined'){RapidTwitter={};}
+
+RapidTwitter.generate_html = function (screen_name, tweets) {
+	return '<li>Hello</li>';
+}`
+
+You can convert Twitter entities by calling the 
+function `RapidTwitter.process_entities( tweet )` and obtain the relative time
+with the function `RapidTwitter.relative_time(time)`.
 
 = Why have you re-written the Wickett Twitter Widget plugin? =
 
