@@ -172,14 +172,14 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		for (i = 0, len = entities.length; i < len; i++) {
 			if (entities[i]) {
 				elem = entities[i];
-				result[result.length] = tweet.text.substring(lastIndex, i);
-				result[result.length] = elem.text;
+				result.push(tweet.text.substring(lastIndex, i));
+				result.push(elem.text);
 				lastIndex = elem.end;
 				i = elem.end - 1;
 			}
 		}
 		
-		result[result.length] = tweet.text.substring(lastIndex);
+		result.push(tweet.text.substring(lastIndex));
 		return result.join('');
 	}	
 	RapidTwitter.process_entities = process_entities;
