@@ -39,7 +39,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '-min';
 		wp_register_script(
 			'rapid-twitter-widget',
-			WP_PLUGIN_URL . "/rapid-twitter-widget/rapid-twitter-widget$suffix.js",
+			plugins_url( 'rapid-twitter-widget/rapid-twitter-widget' . $suffix . '.js' ),
 			'',
 			RAPID_TWITTER_WIDGET_VERSION,
 			true
