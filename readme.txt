@@ -21,6 +21,8 @@ from Twitter doesn't slow down your website.
 
 Based upon Wickett Twitter Widget by Automattic (now part of Jetpack).
 
+ADN users might like the [Rapid ADN Widget](http://wordpress.org/extend/plugins/rapid-adn-widget/).
+
 
 == Development on GitHub ==
 
