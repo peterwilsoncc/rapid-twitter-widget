@@ -3,7 +3,7 @@
 Plugin Name: Rapid Twitter Widget
 Plugin URI: 
 Description: Display the <a href="http://twitter.com/">Twitter</a> latest updates from a Twitter user inside a widget. 
-Version: 1.0
+Version: 1.1
 Author: Peter Wilson, Floate Design Partners
 Author URI: 
 License: GPLv2
