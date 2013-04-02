@@ -197,3 +197,12 @@ add_action( 'widgets_init', 'rapid_twitter_widget_init' );
 function rapid_twitter_widget_init() {
 	register_widget( 'Rapid_Twitter_Widget' );
 }
+
+class Rapid_Twitter_Controller {
+	
+	function __construct() {
+	}
+
+}
+
+$rapid_twitter_controller = new Rapid_Twitter_Controller();
