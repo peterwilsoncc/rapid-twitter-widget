@@ -258,6 +258,20 @@ class Rapid_Twitter_Controller {
 		<?php
 	}
 	
+	function output_options_intro() {
+		?>
+		<p>
+			To use the Rapid Twitter Widget, you need to 
+			<a href="https://dev.twitter.com/apps/new" target="_blank">create an app</a>
+			on the Twitter website.
+		</p>
+		
+		<p>
+			Be sure to fill out all the fields, just enter your website as the
+			callback URL.
+		</p>
+		<?php
+	}
 	
 }
 
