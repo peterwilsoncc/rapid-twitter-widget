@@ -200,6 +200,8 @@ function rapid_twitter_widget_init() {
 
 class Rapid_Twitter_Controller {
 	
+	private $options;
+	
 	function __construct() {
 		add_action( 'admin_menu', array( &$this, 'init_settings_page' ) );
 		add_action( 'admin_init', array($this, 'init_options') );
@@ -290,6 +292,13 @@ class Rapid_Twitter_Controller {
 	}
 	
 	function get_options() {
+		$options = &$this->options;
+		
+		$options = get_option( 'rapid_twitter_widget_api' );
+		
+		if ( $options['key'] AND $options['secret'] ) {
+			// get the token
+		}
 	}
 	
 	function set_options() {
