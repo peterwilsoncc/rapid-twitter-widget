@@ -298,7 +298,12 @@ class Rapid_Twitter_Controller {
 		
 		if ( $options['key'] AND $options['secret'] ) {
 			// get the token
+			$this->get_token();
 		}
+	}
+	
+	function get_token() {
+		
 	}
 	
 	function set_options() {
