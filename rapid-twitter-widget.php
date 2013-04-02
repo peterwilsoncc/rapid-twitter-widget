@@ -201,7 +201,7 @@ function rapid_twitter_widget_init() {
 class Rapid_Twitter_Controller {
 	
 	function __construct() {
-		add_action( 'admin_init', array( &$this, 'init_settings_page' ) );
+		add_action( 'admin_menu', array( &$this, 'init_settings_page' ) );
 		add_action( 'admin_init', array($this, 'init_options') );
 	}
 
