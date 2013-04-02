@@ -274,14 +274,14 @@ class Rapid_Twitter_Controller {
 	}
 
 	function output_key_field() {
-		$this->write_text_field( 'key' );
+		$this->output_text_field( 'key' );
 	}
 	
 	function output_secret_field(){
-		$this->write_text_field( 'secret' );
+		$this->output_text_field( 'secret' );
 	}
 	
-	function write_text_field( $id ) {
+	function output_text_field( $id ) {
 		$val = '';
 		echo '<input class="text" type="text" ';
 		echo 'id="rapid_twitter_widget_api_' . $id . '" ';
