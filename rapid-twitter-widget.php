@@ -272,6 +272,23 @@ class Rapid_Twitter_Controller {
 		</p>
 		<?php
 	}
+
+	function output_key_field() {
+		$this->write_text_field( 'key' );
+	}
+	
+	function output_secret_field(){
+		$this->write_text_field( 'secret' );
+	}
+	
+	function write_text_field( $id ) {
+		$val = '';
+		echo '<input class="text" type="text" ';
+		echo 'id="rapid_twitter_widget_api_' . $id . '" ';
+		echo 'name="rapid_twitter_widget_api[' . $id . ']" ';
+		echo 'size="30" value="' . $val . '"/>';
+	}
+	
 	
 }
 
