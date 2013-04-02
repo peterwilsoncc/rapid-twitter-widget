@@ -219,7 +219,7 @@ class Rapid_Twitter_Controller {
 		add_settings_section(
 			'rapid_twitter_widget_api',
 			'Twitter API Details',
-			array( &$this, 'output_api_options' ),
+			array( &$this, 'output_options_intro' ),
 			'rapid-twitter-widget-settings'
 		);
 		
@@ -241,7 +241,24 @@ class Rapid_Twitter_Controller {
 	}
 
 	function output_settings_page() {
+		?>
+		<div class="wrap">
+			<?php screen_icon(); ?>
+			<h2>Rapid Twitter Widget Settings</h2>
+			<form method="post" action="<?php echo admin_url( 'options-general.php?page=rapid-twitter-widget-settings' ) ?>">
+				<?php
+					// $this->get_option_from_db();
+					// This prints out all hidden setting fields
+					settings_fields('rapid_twitter_widget_option_group');
+					do_settings_sections('rapid-twitter-widget-settings');
+				?>
+				<?php submit_button(); ?>
+			</form>
+		</div>
+		<?php
 	}
+	
+	
 }
 
 $rapid_twitter_controller = new Rapid_Twitter_Controller();
