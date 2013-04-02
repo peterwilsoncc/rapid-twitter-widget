@@ -202,9 +202,42 @@ class Rapid_Twitter_Controller {
 	
 	function __construct() {
 		add_action( 'admin_init', array( &$this, 'init_settings_page' ) );
+		add_action( 'admin_init', array($this, 'init_options') );
 	}
 
 	function init_settings_page() {
+		add_options_page(
+			'Rapid Twitter Widget Settings',
+			'Rapid Twitter Widget',
+			'manage_options',
+			'rapid-twitter-widget-settings',
+			array( &$this, 'write_settings_page' )
+		);
+	}
+	
+	function init_options() {
+		add_settings_section(
+			'rapid_twitter_widget_api',
+			'Twitter API Details',
+			array( &$this, 'output_api_options' ),
+			'rapid-twitter-widget-settings'
+		);
+		
+		add_settings_field(
+			'rapid_twitter_widget_key', 
+			'Twitter consumer key', 
+			array( &$this, 'output_key_field'), 
+			'rapid-twitter-widget-settings',
+			'rapid_twitter_widget_api'
+		);
+
+		add_settings_field(
+			'rapid_twitter_widget_secret', 
+			'Twitter consumer secret', 
+			array( &$this, 'output_secret_field'), 
+			'rapid-twitter-widget-settings',
+			'rapid_twitter_widget_api'
+		);
 	}
 
 }
