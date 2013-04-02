@@ -211,7 +211,7 @@ class Rapid_Twitter_Controller {
 			'Rapid Twitter Widget',
 			'manage_options',
 			'rapid-twitter-widget-settings',
-			array( &$this, 'write_settings_page' )
+			array( &$this, 'output_settings_page' )
 		);
 	}
 	
@@ -240,6 +240,8 @@ class Rapid_Twitter_Controller {
 		);
 	}
 
+	function output_settings_page() {
+	}
 }
 
 $rapid_twitter_controller = new Rapid_Twitter_Controller();
