@@ -313,7 +313,7 @@ class Rapid_Twitter_Controller {
 			return false;
 		}
 		
-		if ( $options['access_token'] ) {
+		if ( isset($options['access_token']) ) {
 			return $options['access_token'];
 		}
 		
