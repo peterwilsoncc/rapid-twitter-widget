@@ -298,11 +298,64 @@ class Rapid_Twitter_Controller {
 		
 		if ( $options['key'] AND $options['secret'] ) {
 			// get the token
-			$this->get_token();
+			$access_token = $this->get_token();
+		}
+		
+		if ( $access_token ) {
+			$options['access_token'] = $token;
 		}
 	}
 	
 	function get_token() {
+		$options = &$this->options;
+		
+		if ( !$options['key'] OR !$options['secret'] ) {
+			return false;
+		}
+		
+		if ( $options['access_token'] ) {
+			return $options['access_token'];
+		}
+		
+		$key_encode = str_replace('%7E', '~', rawurlencode ( $options['key'] ) );
+		$secret_encode = str_replace('%7E', '~', rawurlencode ( $options['secret'] ) );
+		
+		$signature = base64_encode( $key_encode . ':' . $secret_encode )
+		
+		$token = get_transient( 'rapid_twitter_widget_token' );
+		
+		if ( $token AND ( $token['signature'] != $signature ) ) {
+			unset( $token );
+			delete_transient( 'rapid_twitter_widget_token' );
+		}
+		
+		if ( !$token ) {
+			$http_header['Authorization'] = 'Basic ' . $signature;
+			$http_header['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+			
+			$http_body = 'grant_type=client_credentials';
+			
+			$http_args['headers'] = $http_header;
+			$http_args['body'] = $http_body;
+			
+			$http_url = 'https://api.twitter.com/oauth2/token';
+			
+			$response = wp_remote_post( $http_url, $http_args );
+			
+			$response_code = wp_remote_retrieve_response_code( $response );
+			
+			if ( '200' == $response_code ) {
+				$response_body = wp_remote_retrieve_body( $response );
+				$token = json_decode( $response_body, true );
+				$token['signature'] = $signature;
+				
+				set_transient('rapid_twitter_widget_token', $token, 60*60*12 );
+				
+				return $token['access_token'];
+			}
+		}
+		
+		return false;
 		
 	}
 	
