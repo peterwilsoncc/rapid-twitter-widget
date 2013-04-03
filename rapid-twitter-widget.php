@@ -320,7 +320,7 @@ class Rapid_Twitter_Controller {
 		$key_encode = str_replace('%7E', '~', rawurlencode ( $options['key'] ) );
 		$secret_encode = str_replace('%7E', '~', rawurlencode ( $options['secret'] ) );
 		
-		$signature = base64_encode( $key_encode . ':' . $secret_encode )
+		$signature = base64_encode( $key_encode . ':' . $secret_encode );
 		
 		$token = get_transient( 'rapid_twitter_widget_token' );
 		
