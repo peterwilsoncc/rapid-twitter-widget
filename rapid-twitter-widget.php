@@ -302,7 +302,7 @@ class Rapid_Twitter_Controller {
 		}
 		
 		if ( $access_token ) {
-			$options['access_token'] = $token;
+			$options['access_token'] = $access_token;
 		}
 	}
 	
