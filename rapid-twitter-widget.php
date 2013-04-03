@@ -360,6 +360,25 @@ class Rapid_Twitter_Controller {
 	}
 	
 	function set_options() {
+		$options = &$this->options;
+		
+		//unset the access token and recheck before saving.
+		unset( $options['access_token'] );
+		
+		$access_token = $this->get_token();
+		
+		if ( $access_token ) {
+			//the key & secret are valid
+			update_option( 'rapid_twitter_widget_api', $options );
+			
+			//return the access token to the options array
+			$options['access_token'] = $access_token;
+			
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 
