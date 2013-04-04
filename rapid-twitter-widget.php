@@ -290,7 +290,8 @@ class Rapid_Twitter_Controller {
 	}
 	
 	function output_text_field( $id ) {
-		$val = '';
+		$val = esc_attr( $this->options[$id] );
+		
 		echo '<input class="text" type="text" ';
 		echo 'id="rapid_twitter_widget_api_' . $id . '" ';
 		echo 'name="rapid_twitter_widget_api[' . $id . ']" ';
