@@ -249,7 +249,13 @@ class Rapid_Twitter_Controller {
 			<h2>Rapid Twitter Widget Settings</h2>
 			<form method="post" action="<?php echo admin_url( 'options-general.php?page=rapid-twitter-widget-settings' ) ?>">
 				<?php
-					$this->get_options();
+					if ( ( 'update' == $_REQUEST['action'] ) && ( 'rapid-twitter-widget-settings' == $_REQUEST['page'] ) ) {
+						$this->set_options();
+					}
+					else {
+						// read the settings
+						$this->get_options();
+					}
 					// This prints out all hidden setting fields
 					settings_fields('rapid_twitter_widget_option_group');
 					do_settings_sections('rapid-twitter-widget-settings');
