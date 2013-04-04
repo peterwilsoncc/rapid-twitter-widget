@@ -426,12 +426,14 @@ class Rapid_Twitter_Controller {
 		
 		$http_args['headers'] = $http_header;
 		$http_args['body'] = $http_body;
+
+		$query_string = http_build_query( $args );
 		
 		$http_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?';
-		$http_url .= http_build_query( $args );
+		$http_url .= $query_string;
 		$http_url = esc_url_raw( $http_url );
 		
-		$url_reference = md5( $http_url );
+		$url_reference = md5( $query_string );
 		$url_reference = base_convert( $url_reference, 16, 36 );
 		$transient_name = 'rapid_twitter_' . $url_reference;
 		$transient_name = substr( $transient_name, 0, 45 );
