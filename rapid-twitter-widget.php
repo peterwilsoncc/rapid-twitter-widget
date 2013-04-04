@@ -361,6 +361,12 @@ class Rapid_Twitter_Controller {
 	
 	function set_options() {
 		$options = &$this->options;
+		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'rapid_twitter_widget_option_group-options' ) ) {
+			echo '<div class="error"><p>Unable to verify form submission. Settings will not be saved.</p></div>';
+			return;
+		}
+
+
 		
 		//unset the access token and recheck before saving.
 		unset( $options['access_token'] );
@@ -370,6 +376,7 @@ class Rapid_Twitter_Controller {
 		if ( $access_token ) {
 			//the key & secret are valid
 			update_option( 'rapid_twitter_widget_api', $options );
+			echo '<div class="updated"><p>Twitter application updated.</p></div>';
 			
 			//return the access token to the options array
 			$options['access_token'] = $access_token;
@@ -377,6 +384,8 @@ class Rapid_Twitter_Controller {
 			return true;
 		}
 		else {
+			echo '<div class="error"><p>API settings invalid. Please try again.</p></div>';
+			
 			return false;
 		}
 	}
