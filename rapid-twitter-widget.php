@@ -372,6 +372,7 @@ class Rapid_Twitter_Controller {
 			return;
 		}
 
+		$options = $_REQUEST['rapid_twitter_widget_api'];
 
 		
 		//unset the access token and recheck before saving.
