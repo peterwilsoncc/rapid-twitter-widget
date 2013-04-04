@@ -357,11 +357,10 @@ class Rapid_Twitter_Controller {
 				
 				set_transient('rapid_twitter_widget_token', $token, 60*60*12 );
 				
-				return $token['access_token'];
 			}
 		}
 		
-		return false;
+		return $token['access_token'];
 		
 	}
 	
