@@ -433,7 +433,7 @@ class Rapid_Twitter_Controller {
 		
 		$url_reference = md5( $http_url );
 		$url_reference = base_convert( $url_reference, 16, 36 );
-		$transient_name = 'rapid_twitter_widget_' . $url_reference;
+		$transient_name = 'rapid_twitter_' . $url_reference;
 		$transient_name = substr( $transient_name, 0, 45 );
 		
 		$tweets = get_transient( $transient_name );
