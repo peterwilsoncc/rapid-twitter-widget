@@ -442,15 +442,16 @@ class Rapid_Twitter_Controller {
 			$response = wp_remote_get( $http_url, $http_args );
 			$response_code = wp_remote_retrieve_response_code( $response );
 			
+			$tweets = false;
+			
 			if ( '200' == $response_code ) {
 				$response_body = wp_remote_retrieve_body( $response );
 				$tweets = json_decode( $response_body, true );
 
 				set_transient( $transient_name, $tweets, 300 ); /* cache for 5 min */
-
 			}
 		}
-		
+		return $tweets;
 	}
 }
 
