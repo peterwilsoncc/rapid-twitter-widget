@@ -396,6 +396,61 @@ class Rapid_Twitter_Controller {
 			return false;
 		}
 	}
+
+	function get_twitter_feed( $args ) {
+		$options = &$this->options;
+		
+		if ( !$options['key'] OR !$options['secret'] ) {
+			$this->get_options();
+		}
+		
+		if ( !$options['access_token'] OR !$options['key'] OR !$options['secret'] ) {
+			//something has gone wrong
+			return false;
+		}
+		
+		$defaults = array(
+			'screen_name' => 'pwcc_dev',
+			'count' => 5,
+			'exclude_replies' => 'f',
+			'include_rts' => 't',
+			'include_entities' => 't',
+			'trim_user' => 't'
+		);
+		
+		$args = wp_parse_args( $args, $defaults );
+		
+		$http_header['Authorization'] = 'Bearer ' . $options['access_token'];
+		
+		$http_body = '';
+		
+		$http_args['headers'] = $http_header;
+		$http_args['body'] = $http_body;
+		
+		$http_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?';
+		$http_url .= http_build_query( $args );
+		$http_url = esc_url_raw( $http_url );
+		
+		$url_reference = md5( $http_url );
+		$transient_name = 'rapid_twitter_widget_' . $url_reference;
+		$transient_name = substr( $transient_name, 0, 45 );
+		
+		$tweets = get_transient( $transient_name );
+		
+		if ( !$tweets ) {
+			$response = wp_remote_get( $http_url, $http_args );
+			$response_code = wp_remote_retrieve_response_code( $response );
+			
+			if ( '200' == $response_code ) {
+				$response_body = wp_remote_retrieve_body( $response );
+				$tweets = json_decode( $response_body, true );
+
+				set_transient( $transient_name, $tweets, 300 ); /* cache for 5 min */
+
+			}
+		}
+		
+	}
 }
 
 $rapid_twitter_controller = new Rapid_Twitter_Controller();
