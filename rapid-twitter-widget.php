@@ -410,7 +410,6 @@ class Rapid_Twitter_Controller {
 		}
 		
 		$defaults = array(
-			'screen_name' => 'pwcc_dev',
 			'count' => 5,
 			'exclude_replies' => 'f',
 			'include_rts' => 't',
@@ -419,6 +418,10 @@ class Rapid_Twitter_Controller {
 		);
 		
 		$args = wp_parse_args( $args, $defaults );
+		if ( !$args['screen_name'] ) {
+			// nothing to get
+			return false;
+		}
 		
 		$http_header['Authorization'] = 'Bearer ' . $options['access_token'];
 		
