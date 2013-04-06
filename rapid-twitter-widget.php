@@ -418,6 +418,9 @@ class Rapid_Twitter_Controller {
 		);
 		
 		$args = wp_parse_args( $args, $defaults );
+		// make sure the order is always the same
+		ksort( $args );
+		
 		if ( !$args['screen_name'] ) {
 			// nothing to get
 			return false;
