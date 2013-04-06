@@ -126,6 +126,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
+		global $rapid_twitter_controller;
 		extract( $args );
 		
 		$account = trim( urlencode( $instance['account'] ) );
@@ -158,20 +159,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		ksort($args);
 		$query_string = http_build_query( $args );
 
-		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
-		$letters = array( 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' );
-
-		$url_reference = md5( $query_string );
-		$url_reference = base_convert( $url_reference, 16, 26 );
-		$url_ref = str_replace( $numbers, $letters, $url_ref );
-		$transient_name = 'rapid_twitter_' . $url_reference;
-		$transient_name = substr( $transient_name, 0, 45 );
-
-
-		
-		
-
-		
+		$url_ref = $rapid_twitter_controller->url_reference( $args );
 		
 		$widget_ref = '';
 		$widget_ref .= $args['widget_id'];
@@ -410,6 +398,30 @@ class Rapid_Twitter_Controller {
 		}
 	}
 
+	function url_reference( $args ) {
+		$defaults = array(
+			'count' => 5,
+			'exclude_replies' => 'f',
+			'include_rts' => 't',
+			'include_entities' => 't',
+			'trim_user' => 't'
+		);
+		
+		$args = wp_parse_args( $args, $defaults );
+		// make sure the order is always the same
+		ksort( $args );
+
+		$query_string = http_build_query( $args );
+		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
+		$letters = array( 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' );
+
+		$url_reference = md5( $query_string );
+		$url_reference = base_convert( $url_reference, 16, 26 );
+		$url_reference = str_replace( $numbers, $letters, $url_reference );
+
+		return $url_reference;
+	}
+
 	function get_twitter_feed( $args ) {
 		$options = &$this->options;
 		
@@ -452,12 +464,8 @@ class Rapid_Twitter_Controller {
 		$http_url .= $query_string;
 		$http_url = esc_url_raw( $http_url );
 		
-		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
-		$letters = array( 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' );
 
-		$url_reference = md5( $query_string );
-		$url_reference = base_convert( $url_reference, 16, 26 );
-		$url_ref = str_replace( $numbers, $letters, $url_ref );
+		$url_reference = $this->url_reference( $args );
 		$transient_name = 'rapid_twitter_' . $url_reference;
 		$transient_name = substr( $transient_name, 0, 45 );
 		
