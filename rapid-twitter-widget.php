@@ -145,19 +145,32 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo $before_title;
 		echo "<a href='" . esc_url( "https://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
 		echo $after_title;
-		
+
+
+		$args = array(
+			'screen_name' => $account,
+			'count' => $show,
+			'exclude_replies' => $hidereplies,
+			'include_rts' => $include_retweets,
+			'include_entities' => 't',
+			'trim_user' => 't'
+		);
+		ksort($args);
+		$query_string = http_build_query( $args );
+
 		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
 		$letters = array( 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' );
-		
-		$url_ref = '';
-		$url_ref .= $show . '__';
-		$url_ref .= $hidereplies . '__';
-		$url_ref .= $include_retweets . '__';
-		$url_ref .= $account . '';
-		
-		$url_ref = hash( 'md5', $url_ref );
-		$url_ref = base_convert( $url_ref, 16, 26 );
+
+		$url_reference = md5( $query_string );
+		$url_reference = base_convert( $url_reference, 16, 26 );
 		$url_ref = str_replace( $numbers, $letters, $url_ref );
+		$transient_name = 'rapid_twitter_' . $url_reference;
+		$transient_name = substr( $transient_name, 0, 45 );
+
+
+		
+		
+
 		
 		
 		$widget_ref = '';
@@ -439,8 +452,12 @@ class Rapid_Twitter_Controller {
 		$http_url .= $query_string;
 		$http_url = esc_url_raw( $http_url );
 		
+		$numbers = array( '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' );
+		$letters = array( 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' );
+
 		$url_reference = md5( $query_string );
-		$url_reference = base_convert( $url_reference, 16, 36 );
+		$url_reference = base_convert( $url_reference, 16, 26 );
+		$url_ref = str_replace( $numbers, $letters, $url_ref );
 		$transient_name = 'rapid_twitter_' . $url_reference;
 		$transient_name = substr( $transient_name, 0, 45 );
 		
