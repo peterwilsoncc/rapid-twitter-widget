@@ -194,43 +194,48 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		(function(){
 			var key = outer_key,
 				api = apis[key],
+				config = RapidTwitter_config,
 				tw = document.createElement('script'),
 				s, script_source;
 
-			// script_source = ('https:' == document.location.protocol ? 'https:' : 'http:');
-			// script_source += '//api.twitter.com/1/statuses/user_timeline.json?';
+			script_source = config.ajaxurl;
+			script_source += '?';
 
-			// script_source += 'count=';
-			// script_source += api.count;
-			// script_source += '&';
-			// script_source += 'screen_name=';
-			// script_source += api.screen_name;
-			// script_source += '&';
-			// script_source += 'exclude_replies=';
-			// script_source += api.exclude_replies;
-			// script_source += '&';
-			// script_source += 'include_rts=';
-			// script_source += api.include_rts;
-			// script_source += '&';
-			// script_source += 'include_entities=';
-			// script_source += 't';
-			// script_source += '&';
-			// script_source += 'trim_user=';
-			// script_source += 't';
-			// script_source += '&';
-			// script_source += 'suppress_response_codes=';
-			// script_source += 't';
-			// script_source += '&';
-			// script_source += 'callback=RapidTwitter.callback.' + key + '';
+			script_source += 'count=';
+			script_source += api.count;
+			script_source += '&';
+			script_source += 'screen_name=';
+			script_source += api.screen_name;
+			script_source += '&';
+			script_source += 'exclude_replies=';
+			script_source += api.exclude_replies;
+			script_source += '&';
+			script_source += 'include_rts=';
+			script_source += api.include_rts;
+			script_source += '&';
+			script_source += 'include_entities=';
+			script_source += 't';
+			script_source += '&';
+			script_source += 'trim_user=';
+			script_source += 't';
+			script_source += '&';
+			script_source += 'suppress_response_codes=';
+			script_source += 't';
+			script_source += '&';
+			script_source += 'callback=' + key;
+			script_source += '&';
+			script_source += 'action=rapid_twitter';
+			script_source += '&';
+			script_source += 's=' + config.sec;
 
 
 			RapidTwitter.callback[key] = function(tweets) {callback(api,tweets);};
 
-			// tw.type = 'text/javascript';
-			// tw.async = true;
-			// tw.src = script_source;
-			// s = document.getElementsByTagName('script')[0]; 
-			// s.parentNode.insertBefore(tw, s);
+			tw.type = 'text/javascript';
+			tw.async = true;
+			tw.src = script_source;
+			s = document.getElementsByTagName('script')[0]; 
+			s.parentNode.insertBefore(tw, s);
 
 		})();
 	}

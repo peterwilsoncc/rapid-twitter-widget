@@ -45,6 +45,17 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			true
 		);
 
+		$js_data = array(
+			'ajaxurl' =>  admin_url('admin-ajax.php'),
+			'sec' => wp_create_nonce( 'rapid_twitter_nonce_')
+		);
+		
+		wp_localize_script(
+			'rapid-twitter-widget',
+			'RapidTwitter_config',
+			$js_data
+		);
+
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -214,10 +225,8 @@ class Rapid_Twitter_Controller {
 		add_action( 'admin_menu', array( &$this, 'init_settings_page' ) );
 		add_action( 'admin_init', array( &$this, 'init_options' ) );
 		
-		add_action( 'wp_footer', array( &$this, 'output_json_callback' ), 20 );
-		
-		// add_action( 'wp_ajax_rapid_twitter', array( &$this, 'ajax_rapid_twitter' ) ); //logged in
-		// add_action( 'wp_ajax_nopriv_rapid_twitter', array( &$this, 'ajax_rapid_twitter' ) ); //logged out
+		add_action( 'wp_ajax_rapid_twitter', array( &$this, 'ajax_rapid_twitter' ) ); //logged in
+		add_action( 'wp_ajax_nopriv_rapid_twitter', array( &$this, 'ajax_rapid_twitter' ) ); //logged out
 		
 	}
 
@@ -506,22 +515,10 @@ class Rapid_Twitter_Controller {
 		$this->callbacks[$reference] = $args;
 	}
 
-	function output_json_callback( $args ) {
-		$callbacks = $this->callbacks;
-		
-		if ( is_array( $callbacks ) ) {
-			echo '<script>';
-			foreach ( $callbacks as $reference => $args ) {
-				$tweets = json_encode( $this->get_twitter_feed( $args ) );
-				echo 'RapidTwitter.callback.' . $reference . '(';
-				echo $tweets;
-				echo ');';
-			}
-			echo '</script>';
-		}
-	}
-	
 	function ajax_rapid_twitter() {
+		
+		check_ajax_referer( 'rapid_twitter_nonce_', 's' );
+		
 		header('Content-Type: application/javascript;charset=utf-8');
 		
 		$args = array(
@@ -581,6 +578,7 @@ class Rapid_Twitter_Controller {
 		$expires = gmdate("D, d M Y H:i:s", time() + $cache_for) . " GMT";
 		header("Cache-Control: max-age=" . $cache_for . "");
 		header("Expires: " . $expires);
+		header("Pragma: public");
 		
 		echo 'RapidTwitter.callback.' . $reference . '(';
 		echo $tweets;
