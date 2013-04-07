@@ -216,8 +216,8 @@ class Rapid_Twitter_Controller {
 		
 		add_action( 'wp_footer', array( &$this, 'output_json_callback' ), 20 );
 		
-		// add_action( 'wp_ajax_tweets', array( &$this, 'ajax_tweets' ) ); //logged in
-		// add_action( 'wp_ajax_nopriv_tweets', array( &$this, 'ajax_tweets' ) ); //logged out
+		// add_action( 'wp_ajax_rapid_twitter', array( &$this, 'ajax_rapid_twitter' ) ); //logged in
+		// add_action( 'wp_ajax_nopriv_rapid_twitter', array( &$this, 'ajax_rapid_twitter' ) ); //logged out
 		
 	}
 
@@ -521,7 +521,7 @@ class Rapid_Twitter_Controller {
 		}
 	}
 	
-	function ajax_tweets() {
+	function ajax_rapid_twitter() {
 		header('Content-Type: application/javascript;charset=utf-8');
 		
 		$args = array(
