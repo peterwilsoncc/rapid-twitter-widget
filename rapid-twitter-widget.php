@@ -215,6 +215,10 @@ class Rapid_Twitter_Controller {
 		add_action( 'admin_init', array( &$this, 'init_options' ) );
 		
 		add_action( 'wp_footer', array( &$this, 'output_json_callback' ), 20 );
+		
+		// add_action( 'wp_ajax_tweets', array( &$this, 'ajax_tweets' ) ); //logged in
+		// add_action( 'wp_ajax_nopriv_tweets', array( &$this, 'ajax_tweets' ) ); //logged out
+		
 	}
 
 	function init_settings_page() {
@@ -515,6 +519,75 @@ class Rapid_Twitter_Controller {
 			}
 			echo '</script>';
 		}
+	}
+	
+	function ajax_tweets() {
+		header('Content-Type: application/javascript;charset=utf-8');
+		
+		$args = array(
+			'screen_name' => $_REQUEST['screen_name'],
+			'count' => $_REQUEST['count'],
+			'exclude_replies' => $_REQUEST['exclude_replies'],
+			'include_rts' => $_REQUEST['include_rts'],
+			'include_entities' => 't',
+			'trim_user' => 't'
+		);
+		
+		if ( $args['exclude_replies'] == 'true' ) {
+			$args['exclude_replies'] = 't';
+		}
+		if ( $args['exclude_replies'] == 'false' ) {
+			$args['exclude_replies'] = 'f';
+		}
+		
+		if ( ( $args['exclude_replies'] != 't' ) AND ( $args['exclude_replies'] != 'f' ) ) {
+			$args['exclude_replies'] = '';
+		}
+
+		if ( $args['include_rts'] == 'true' ) {
+			$args['include_rts'] = 't';
+		}
+		if ( $args['include_rts'] == 'false' ) {
+			$args['include_rts'] = 'f';
+		}
+
+		if ( ( $args['include_rts'] != 't' ) AND ( $args['include_rts'] != 'f' ) ) {
+			$args['include_rts'] = '';
+		}
+		
+		
+
+		
+		switch(1) {
+			case ( trim( $args['screen_name'] ) == '' ):
+			case ( is_numeric( $args['count'] ) == false ):
+			case ( trim( $args['exclude_replies'] ) == '' ):
+			case ( trim( $args['include_rts'] ) == '' ):
+				header("HTTP/1.0 400 Bad Request");
+				die();
+				break;
+		}
+		
+		if ( trim( $args['screen_name'] ) == '' ) {
+			header("HTTP/1.0 400 Bad Request");
+		}
+
+		$reference = $_REQUEST['callback'];
+		
+		
+		$tweets = json_encode( $this->get_twitter_feed( $args ) );
+		
+		$cache_for = 5 * 60; //cache for 5 minutes
+		$expires = gmdate("D, d M Y H:i:s", time() + $cache_for) . " GMT";
+		header("Cache-Control: max-age=" . $cache_for . "");
+		header("Expires: " . $expires);
+		
+		echo 'RapidTwitter.callback.' . $reference . '(';
+		echo $tweets;
+		echo ');';
+
+		
+		die();
 	}
 }
 
