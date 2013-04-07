@@ -161,6 +161,11 @@ class Rapid_Twitter_Widget extends WP_Widget {
 
 		$url_ref = $rapid_twitter_controller->url_reference( $args );
 		
+		$callback_args = $args;
+		$callback_args['reference'] = $url_ref;
+		
+		$rapid_twitter_controller->add_json_callback($callback_args);
+		
 		$widget_ref = '';
 		$widget_ref .= $args['widget_id'];
 		$widget_ref .= '__';
@@ -202,10 +207,14 @@ function rapid_twitter_widget_init() {
 class Rapid_Twitter_Controller {
 	
 	private $options;
+	private $callbacks;
+	private $json_feeds;
 	
 	function __construct() {
 		add_action( 'admin_menu', array( &$this, 'init_settings_page' ) );
 		add_action( 'admin_init', array($this, 'init_options') );
+		
+		add_action( 'wp_footer', array( &$this, 'output_json_callback' ), 20 );
 	}
 
 	function init_settings_page() {
@@ -485,6 +494,27 @@ class Rapid_Twitter_Controller {
 			}
 		}
 		return $tweets;
+	}
+	
+	function add_json_callback( $args ) {
+		$reference = $args['reference'];
+		unset( $args['reference'] );
+		$this->callbacks[$reference] = $args;
+	}
+
+	function output_json_callback( $args ) {
+		$callbacks = $this->callbacks;
+		
+		if ( is_array( $callbacks ) ) {
+			foreach ( $callbacks as $reference => $args ) {
+				$tweets = json_encode( $this->get_twitter_feed( $args ) );
+				echo '<script>';
+				echo 'RapidTwitter.callback.' . $reference . '(';
+				echo $tweets;
+				echo ');';
+				echo '</script>';
+			}
+		}
 	}
 }
 
