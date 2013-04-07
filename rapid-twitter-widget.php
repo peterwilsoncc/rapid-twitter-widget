@@ -506,14 +506,14 @@ class Rapid_Twitter_Controller {
 		$callbacks = $this->callbacks;
 		
 		if ( is_array( $callbacks ) ) {
+			echo '<script>';
 			foreach ( $callbacks as $reference => $args ) {
 				$tweets = json_encode( $this->get_twitter_feed( $args ) );
-				echo '<script>';
 				echo 'RapidTwitter.callback.' . $reference . '(';
 				echo $tweets;
 				echo ');';
-				echo '</script>';
 			}
+			echo '</script>';
 		}
 	}
 }
