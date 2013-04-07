@@ -565,10 +565,6 @@ class Rapid_Twitter_Controller {
 				break;
 		}
 		
-		if ( trim( $args['screen_name'] ) == '' ) {
-			header("HTTP/1.0 400 Bad Request");
-		}
-
 		$reference = $_REQUEST['callback'];
 		
 		
