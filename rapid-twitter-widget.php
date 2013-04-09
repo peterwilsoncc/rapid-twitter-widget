@@ -490,21 +490,63 @@ class Rapid_Twitter_Controller {
 		$url_reference = $this->url_reference( $args );
 		$transient_name = 'rapid_twitter_' . $url_reference;
 		$transient_name = substr( $transient_name, 0, 45 );
+
+		$transient_backup = 'rapid_twi_bup_' . $url_reference;
+		$transient_backup = substr( $transient_backup, 0, 45 );
+		
 		
 		$tweets = get_transient( $transient_name );
 		
 		if ( !$tweets ) {
 			$response = wp_remote_get( $http_url, $http_args );
 			$response_code = wp_remote_retrieve_response_code( $response );
+			$response_body = wp_remote_retrieve_body( $response );
 			
 			$tweets = false;
 			
-			if ( '200' == $response_code ) {
-				$response_body = wp_remote_retrieve_body( $response );
-				$tweets = json_decode( $response_body, true );
+			switch ( $response_code ) {
+				case 200 : // process tweets and display
+					$tweets = json_decode( $response_body, true );
 
-				set_transient( $transient_name, $tweets, 300 ); /* cache for 5 min */
+					if ( ! is_array( $tweets ) || isset( $tweets['error'] ) ) {
+						$tweet_cache_expire = 300;
+						break;
+					} else {
+						set_transient( $transient_backup, $tweets, 86400 ); // A one day backup in case there is trouble talking to Twitter
+					}
+
+					$cache_for =  900; 
+					break;
+				case 401 : // display private stream notice
+					$tweets = array();
+					$tweets['error'] = 'Private account';
+					$tweets['code'] = $response_code;
+					$tweets['request'] = $url_reference;
+					$cache_for = 300;
+					break;
+				case 401 :
+				case 404 :
+				case 410 :
+				case 420 :
+				case 429 :
+					// Wait out this error, it's permanent of some nature
+					$tweets = array();
+					$tweets['error'] = 'Permanent error';
+					$tweets['code'] = $response_code;
+					$tweets['request'] = $url_reference;
+					$cache_for = 300;
+					break;
+				
+				default :  // display an error message
+					$tweets = get_transient( $transient_backup );
+					$cache_for = 300;
+					break;
 			}
+			
+			if ( $cache_for != 0 ) {
+				set_transient( $transient_name, $tweets, $cache_for ); /* cache for 5 min */
+			}
+			
 		}
 		return $tweets;
 	}
