@@ -610,16 +610,25 @@ class Rapid_Twitter_Controller {
 		$reference = $_REQUEST['callback'];
 		
 		
-		$tweets = json_encode( $this->get_twitter_feed( $args ) );
+		$tweets = $this->get_twitter_feed( $args );
 		
 		$cache_for = 5 * 60; //cache for 5 minutes
 		$expires = gmdate("D, d M Y H:i:s", time() + $cache_for) . " GMT";
-		header("Cache-Control: max-age=" . $cache_for . "");
-		header("Expires: " . $expires);
-		header("Pragma: public");
+		
+		if ( $tweets != false ) {
+			header("Cache-Control: max-age=" . $cache_for . "");
+			header("Expires: " . $expires);
+			header("Pragma: public");
+			$jsondata = json_encode( $tweets );
+		}
+		else {
+			$error_msg['request'] = $reference;
+			$error_msg['error'] = 'Not Found';
+			$jsondata = json_encode( $error_msg );
+		}
 		
 		echo 'RapidTwitter.callback.' . $reference . '(';
-		echo $tweets;
+		echo $jsondata;
 		echo ');';
 
 		
