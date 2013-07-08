@@ -16,9 +16,9 @@ class Rapid_Twitter_Widget extends WP_Widget {
 	function Rapid_Twitter_Widget() {
 		$widget_ops = array(
 			'classname'   => 'widget_twitter widget_twitter--hidden',
-			'description' => __( 'Display your tweets from Twitter')
+			'description' => __( 'Display your tweets from Twitter', 'rtw' )
 		);
-		parent::WP_Widget( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
+		parent::WP_Widget( 'rapid-twitter', __( 'Rapid Twitter', 'rtw' ), $widget_ops );
 		
 		if ( is_active_widget(false, false, $this->id_base) ) {
 			add_action( 'wp_head', array(&$this, 'rapid_twitter_widget_style') );
@@ -95,19 +95,19 @@ class Rapid_Twitter_Widget extends WP_Widget {
 
 		//Title
 		echo '<p>';
-		echo '<label for="' . $this->get_field_id('title') . '">' . esc_html__('Title:') . '</label>';
+		echo '<label for="' . $this->get_field_id('title') . '">' . esc_html__('Title:', 'rtw') . '</label>';
 		echo '<input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />';
 		echo '</p>';
 
 		//Username
 		echo '<p>';
-		echo '<label for="' . $this->get_field_id('account') . '">' . esc_html__('Twitter username:') . '</label>';
+		echo '<label for="' . $this->get_field_id('account') . '">' . esc_html__('Twitter username:', 'rtw') . '</label>';
 		echo '<input class="widefat" id="' . $this->get_field_id('account') . '" name="' . $this->get_field_name('account') . '" type="text" value="' . $account . '" />';
 		echo '</p>';
 
 		//Max Tweets
 		echo '<p>';
-		echo '<label for="' . $this->get_field_id('show') . '">' . esc_html__('Maximum number of tweets to show:') . '</label>';
+		echo '<label for="' . $this->get_field_id('show') . '">' . esc_html__('Maximum number of tweets to show:', 'rtw') . '</label>';
 		echo '<select id="' . $this->get_field_id('show') . '" name="' . $this->get_field_name('show') . '">';
 
 		for ( $i = 1; $i <= 20; ++$i )
@@ -122,7 +122,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '<input id="' . $this->get_field_id('hidereplies') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('hidereplies') . '"';
 		if ( $hidereplies )
 			echo ' checked="checked"';
-		echo ' /> ' . esc_html__('Hide replies');
+		echo ' /> ' . esc_html__('Hide replies', 'rtw');
 		echo '</label>';
 		echo '</p>';
 
@@ -131,7 +131,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '<label for="' . $this->get_field_id('includeretweets') . '"><input id="' . $this->get_field_id('includeretweets') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('includeretweets') . '"';
 		if ( $include_retweets )
 			echo ' checked="checked"';
-		echo ' /> ' . esc_html__('Include retweets');
+		echo ' /> ' . esc_html__('Include retweets', 'rtw');
 		echo '</label>';
 		echo '</p>';
 	}
@@ -143,7 +143,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$account = trim( urlencode( $instance['account'] ) );
 		if ( empty( $account ) ) return;
 		$title = apply_filters( 'widget_title', $instance['title'] );
-		if ( empty( $title ) ) $title = __( 'Twitter Updates' );
+		if ( empty( $title ) ) $title = __( 'Twitter Updates', 'rtw' );
 		$show = absint( $instance['show'] );  // # of Updates to show
 		if ( $show > 200 ) {
 			// Twitter paginates at 200 max tweets. update() should not have accepted greater than 20
@@ -232,8 +232,8 @@ class Rapid_Twitter_Controller {
 
 	function init_settings_page() {
 		add_options_page(
-			'Rapid Twitter Widget Settings',
-			'Rapid Twitter Widget',
+			__( 'Rapid Twitter Widget Settings', 'rtw' ),
+			__( 'Rapid Twitter Widget', 'rtw' ),
 			'manage_options',
 			'rapid-twitter-widget-settings',
 			array( &$this, 'output_settings_page' )
@@ -243,14 +243,14 @@ class Rapid_Twitter_Controller {
 	function init_options() {
 		add_settings_section(
 			'rapid_twitter_widget_api',
-			'Twitter API Details',
+			__( 'Twitter API Details', 'rtw' ),
 			array( &$this, 'output_options_intro' ),
 			'rapid-twitter-widget-settings'
 		);
 		
 		add_settings_field(
 			'rapid_twitter_widget_key', 
-			'Twitter consumer key', 
+			__( 'Twitter consumer key', 'rtw' ), 
 			array( &$this, 'output_key_field'), 
 			'rapid-twitter-widget-settings',
 			'rapid_twitter_widget_api'
@@ -258,7 +258,7 @@ class Rapid_Twitter_Controller {
 
 		add_settings_field(
 			'rapid_twitter_widget_secret', 
-			'Twitter consumer secret', 
+			__( 'Twitter consumer secret', 'rtw' ), 
 			array( &$this, 'output_secret_field'), 
 			'rapid-twitter-widget-settings',
 			'rapid_twitter_widget_api'
@@ -269,7 +269,7 @@ class Rapid_Twitter_Controller {
 		?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
-			<h2>Rapid Twitter Widget Settings</h2>
+			<h2><?php _e( 'Rapid Twitter Widget Settings', 'rtw' ) ?></h2>
 			<form method="post" action="<?php echo admin_url( 'options-general.php?page=rapid-twitter-widget-settings' ) ?>">
 				<?php
 					if ( ( 'update' == $_REQUEST['action'] ) && ( 'rapid-twitter-widget-settings' == $_REQUEST['page'] ) ) {
@@ -292,15 +292,11 @@ class Rapid_Twitter_Controller {
 	function output_options_intro() {
 		?>
 		<p>
-			To use the Rapid Twitter Widget, you need to 
-			<a href="https://dev.twitter.com/apps/new" target="_blank">create an app</a>
-			on the Twitter website.
+		<?php echo sprintf( __( 'To use the Rapid Twitter Widget, you need to <a href="%s" target="_blank">create an app</a> on the Twitter website.', 'rtw' ), 'https://dev.twitter.com/apps/new' ) ?>
 		</p>
 		
 		<p>
-			Be sure to fill out all the fields, just enter your website as the
-			callback URL.
-		</p>
+		<?php _e( 'Be sure to fill out all the fields, just enter your website as the callback URL.', 'rtw' ) ?></p>
 		<?php
 	}
 
@@ -391,7 +387,7 @@ class Rapid_Twitter_Controller {
 	function set_options() {
 		$options = &$this->options;
 		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'rapid_twitter_widget_option_group-options' ) ) {
-			echo '<div class="error"><p>Unable to verify form submission. Settings will not be saved.</p></div>';
+			echo '<div class="error"><p>' . __( 'Unable to verify form submission. Settings will not be saved.', 'rtw' ) . '</p></div>';
 			return;
 		}
 
@@ -406,7 +402,7 @@ class Rapid_Twitter_Controller {
 		if ( $access_token ) {
 			//the key & secret are valid
 			update_option( 'rapid_twitter_widget_api', $options );
-			echo '<div class="updated"><p>Twitter application updated.</p></div>';
+			echo '<div class="updated"><p>' . __( 'Twitter application updated.', 'rtw' ) . '</p></div>';
 			
 			//return the access token to the options array
 			$options['access_token'] = $access_token;
@@ -414,7 +410,7 @@ class Rapid_Twitter_Controller {
 			return true;
 		}
 		else {
-			echo '<div class="error"><p>API settings invalid. Please try again.</p></div>';
+			echo '<div class="error"><p>' . __( 'API settings invalid. Please try again.', 'rtw' ) . '</p></div>';
 			
 			return false;
 		}
