@@ -233,7 +233,7 @@ class Rapid_Twitter_Controller {
 	function init_settings_page() {
 		add_options_page(
 			__( 'Rapid Twitter Widget Settings', 'rtw' ),
-			__( 'Rapid Twitter Widget', 'rtw' ),
+			_x( 'Rapid Twitter Widget', 'options-general', 'rtw' ),
 			'manage_options',
 			'rapid-twitter-widget-settings',
 			array( &$this, 'output_settings_page' )
