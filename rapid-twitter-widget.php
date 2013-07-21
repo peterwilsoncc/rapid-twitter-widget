@@ -565,7 +565,7 @@ class Rapid_Twitter_Controller {
 		
 		$args = array(
 			'screen_name' => $_REQUEST['screen_name'],
-			'count' => $_REQUEST['count'],
+			'count' => intval( $_REQUEST['count'] ),
 			'exclude_replies' => $_REQUEST['exclude_replies'],
 			'include_rts' => $_REQUEST['include_rts'],
 			'include_entities' => 't',
@@ -607,7 +607,7 @@ class Rapid_Twitter_Controller {
 				break;
 		}
 		
-		$reference = $_REQUEST['callback'];
+		$reference = sanitize_key( $_REQUEST['callback'] );
 		
 		
 		$tweets = $this->get_twitter_feed( $args );
