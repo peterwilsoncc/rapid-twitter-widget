@@ -564,7 +564,7 @@ class Rapid_Twitter_Controller {
 		header('Content-Type: application/javascript;charset=utf-8');
 		
 		$args = array(
-			'screen_name' => $_REQUEST['screen_name'],
+			'screen_name' => urlencode ( $_REQUEST['screen_name'] ),
 			'count' => intval( $_REQUEST['count'] ),
 			'exclude_replies' => $_REQUEST['exclude_replies'],
 			'include_rts' => $_REQUEST['include_rts'],
