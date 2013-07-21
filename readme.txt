@@ -1,9 +1,9 @@
 === Rapid Twitter Widget ===
 Contributors: peterwilsoncc, floatedesign
 Tags: twitter, widget, tweets
-Stable tag: 1.2
+Stable tag: 1.2.1
 Requires at least: 3.4.2
-Tested up to: 3.5.1
+Tested up to: 3.5.2
 License: GPLv2
 
 Display tweets from one or more Twitter accounts using a WordPress widget. Compatible with version 1.1 of the Twitter API.
@@ -91,11 +91,18 @@ They're a little strange at first but I find them surprisingly useful.
 
 == Upgrade Notice ==
 
+= 1.2.1 =
+*** ESSENTIAL UPGRADE *** Fixes XSS bug
+
 = 1.2 =
 Upgrade to work with new Twitter API. Visit the settings page following upgrade to create your Twitter [application](https://dev.twitter.com/apps/new). 
 
 
 == Changelog ==
+
+= 1.2.1 =
+
+* Removes cross-site scripting bug reported by Sjoerd Koelewijn
 
 = 1.2 =
 
