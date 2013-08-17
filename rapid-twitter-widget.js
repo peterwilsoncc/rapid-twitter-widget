@@ -161,6 +161,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 							case 'hashtags':
 								return '<a href="https://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag"><span>#</span>' + elem.text + '</a>';
 								break;
+							case 'symbols':
+								return '<a href="https://twitter.com/search?q=%24' + elem.text + '" class="tweet__symbols"><span>$</span>' + elem.text + '</a>';
+								break;
 							default:
 								return '';
 						}
