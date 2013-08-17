@@ -167,7 +167,7 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 								return '<a href="https://twitter.com/search?q=%24' + elem.text + '" class="tweet__symbols"><span>$</span>' + elem.text + '</a>';
 								break;
 							default:
-								return '';
+								return elem.text;
 						}
 					}()
 				};
