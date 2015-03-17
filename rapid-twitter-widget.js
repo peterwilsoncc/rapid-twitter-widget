@@ -18,13 +18,13 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		for (var i=0; i<widgets_len; i++) {
 			var element = widgets[i],
 				ul = document.createElement('ul');
-			element = document.getElementById(element).parentNode;
+			element = document.getElementById(element);
 			
 			ul.className = 'tweets';
 			ul.innerHTML = the_html;
 			element.appendChild(ul);
 
-			removeClass(element, 'widget_twitter--hidden');
+			removeClass(element.parentNode, 'widget_twitter--hidden');
 		}
 	}
 	RapidTwitter.callback = callback;

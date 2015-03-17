@@ -33,6 +33,13 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			return;
 		}
 		echo "<style>.widget_twitter--hidden{display:none!important;}</style>";
+		wp_register_style(
+			'rapid-twitter-widget',
+			plugins_url( 'rapid-twitter-widget/rapid-twitter-widget' . '.css' ),
+			'',
+			RAPID_TWITTER_WIDGET_VERSION,
+			'all'
+		);
 	}
 
 	function rapid_twitter_widget_script() {
@@ -71,6 +78,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$instance['show'] = absint( $new_instance['show'] );
 		$instance['hidereplies'] = isset( $new_instance['hidereplies'] );
 		$instance['includeretweets'] = isset( $new_instance['includeretweets'] );
+		$instance['followbutton'] = isset( $new_instance['followbutton'] );
 
 		return $instance;
 	}
@@ -82,7 +90,8 @@ class Rapid_Twitter_Widget extends WP_Widget {
 				'account'     => '',
 				'title'       => '',
 				'show'        => 5,
-				'hidereplies'	=> false
+				'hidereplies'	=> false,
+				'followbutton'  => false,
 			) );
 
 		$account = esc_attr( $instance['account'] );
@@ -92,6 +101,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 			$show = 5;
 		$hidereplies = (bool) $instance['hidereplies'];
 		$include_retweets = (bool) $instance['includeretweets'];
+		$follow_button = (bool) $instance['followbutton'];
 
 		//Title
 		echo '<p>';
@@ -116,7 +126,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '</select>';
 		echo '</p>';
 
-		//Hide Reploes
+		//Hide Replies
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id('hidereplies') . '">';
 		echo '<input id="' . $this->get_field_id('hidereplies') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('hidereplies') . '"';
@@ -132,6 +142,15 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		if ( $include_retweets )
 			echo ' checked="checked"';
 		echo ' /> ' . esc_html__('Include retweets');
+		echo '</label>';
+		echo '</p>';
+
+		//Follow button
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id('followbutton') . '"><input id="' . $this->get_field_id('followbutton') . '" class="checkbox" type="checkbox" name="' . $this->get_field_name('followbutton') . '"';
+		if ( $follow_button )
+			echo ' checked="checked"';
+		echo ' /> ' . esc_html__('Display Follow button');
 		echo '</label>';
 		echo '</p>';
 	}
@@ -151,11 +170,16 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		}
 		$hidereplies = (bool) $instance['hidereplies'] ? 't' : 'f';
 		$include_retweets = (bool) $instance['includeretweets'] ? 't' : 'f';
+		$follow_button = (bool) $instance['followbutton'];
 
 		echo $before_widget;
 
 		echo $before_title;
-		echo "<a href='" . esc_url( "https://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
+		if ( $follow_button ) {
+			echo esc_html($title);
+		} else {
+			echo "<a href='" . esc_url( "https://twitter.com/{$account}" ) . "'>" . esc_html($title) . "</a>";
+		}
 		echo $after_title;
 
 
@@ -187,7 +211,7 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		$script_id = hash( 'md5', $widget_ref );
 		$script_id = base_convert( $script_id, 16, 36 );
 
-		echo '<script id="' . $script_id . '">';
+		echo '<script>';
 		echo 'if(typeof(RapidTwitter)==\'undefined\'){';
 		echo 'RapidTwitter={};RapidTwitter.apis={};';
 		echo '}';
@@ -202,7 +226,13 @@ class Rapid_Twitter_Widget extends WP_Widget {
 		echo '}';
 		echo 'RapidTwitter.apis.' . $url_ref . '.widgets.push(\'' . $script_id . '\');';
 		echo '</script>';
+		echo '<div id="' . $script_id . '"></div>';
 		wp_enqueue_script( 'rapid-twitter-widget' );
+		if ( $follow_button ) {
+			wp_enqueue_style( 'rapid-twitter-widget' );
+			echo '<a target="_blank" class="rapid-twitter-btn" title="Follow @' . $account . ' on Twitter" href="https://twitter.com/' . $account . '">' . "\n";
+			echo '<i></i><span class="label">Follow @' . $account . '</span></a>' . "\n";
+		}
 		echo $after_widget;
 		
 	}
