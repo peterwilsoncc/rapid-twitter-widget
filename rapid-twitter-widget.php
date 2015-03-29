@@ -305,11 +305,19 @@ class Rapid_Twitter_Controller {
 	}
 
 	function output_key_field() {
-		$this->output_text_field( 'key' );
+		if ( ! defined('RAPID_TWITTER_KEY') ) {
+			$this->output_text_field( 'key' );
+		} else {
+			echo RAPID_TWITTER_KEY . '<br /><em>Globally defined in wp-config.php.</em>';
+		}
 	}
 	
 	function output_secret_field(){
-		$this->output_text_field( 'secret' );
+		if ( ! defined('RAPID_TWITTER_SECRET') ) {
+			$this->output_text_field( 'secret' );
+		} else {
+			echo RAPID_TWITTER_SECRET . '<br /><em>Globally defined in wp-config.php.</em>';
+		}
 	}
 	
 	function output_text_field( $id ) {
@@ -324,7 +332,12 @@ class Rapid_Twitter_Controller {
 	function get_options() {
 		$options = &$this->options;
 		
-		$options = get_option( 'rapid_twitter_widget_api' );
+		if ( ! defined( 'RAPID_TWITTER_KEY' ) && ! defined ( 'RAPID_TWITTER_SECRET' ) ) {
+			$options = get_option( 'rapid_twitter_widget_api' );
+		} else {
+			$options['key'] = RAPID_TWITTER_KEY;
+			$options['secret'] = RAPID_TWITTER_SECRET;
+		}
 		
 		if ( $options['key'] AND $options['secret'] ) {
 			// get the token
@@ -352,7 +365,7 @@ class Rapid_Twitter_Controller {
 		
 		$signature = base64_encode( $key_encode . ':' . $secret_encode );
 		
-		$token = get_transient( 'rapid_twitter_widget_token' );
+		$token = get_site_transient( 'rapid_twitter_widget_token' );
 		
 		if ( $token AND ( $token['signature'] != $signature ) ) {
 			unset( $token );
@@ -379,7 +392,7 @@ class Rapid_Twitter_Controller {
 				$token = json_decode( $response_body, true );
 				$token['signature'] = $signature;
 				
-				set_transient('rapid_twitter_widget_token', $token, 60*60*12 );
+				set_site_transient('rapid_twitter_widget_token', $token, 60*60*12 );
 				
 			}
 		}
@@ -495,7 +508,7 @@ class Rapid_Twitter_Controller {
 		$transient_backup = substr( $transient_backup, 0, 45 );
 		
 		
-		$tweets = get_transient( $transient_name );
+		$tweets = get_site_transient( $transient_name );
 		
 		if ( !$tweets ) {
 			$response = wp_remote_get( $http_url, $http_args );
@@ -512,7 +525,7 @@ class Rapid_Twitter_Controller {
 						$tweet_cache_expire = 300;
 						break;
 					} else {
-						set_transient( $transient_backup, $tweets, 86400 ); // A one day backup in case there is trouble talking to Twitter
+						set_site_transient( $transient_backup, $tweets, 86400 ); // A one day backup in case there is trouble talking to Twitter
 					}
 
 					$cache_for =  900; 
@@ -538,13 +551,13 @@ class Rapid_Twitter_Controller {
 					break;
 				
 				default :  // display an error message
-					$tweets = get_transient( $transient_backup );
+					$tweets = get_site_transient( $transient_backup );
 					$cache_for = 300;
 					break;
 			}
 			
 			if ( $cache_for != 0 ) {
-				set_transient( $transient_name, $tweets, $cache_for ); /* cache for 5 min */
+				set_site_transient( $transient_name, $tweets, $cache_for ); /* cache for 5 min */
 			}
 			
 		}
