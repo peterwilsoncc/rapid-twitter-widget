@@ -3,22 +3,22 @@
 Plugin Name: Rapid Twitter Widget
 Plugin URI: 
 Description: Display the <a href="http://twitter.com/">Twitter</a> latest updates from a Twitter user inside a widget. 
-Version: 1.2.1
+Version: 1.3
 Author: Peter Wilson, Floate Design Partners
 Author URI: 
 License: GPLv2
 */
 
-define('RAPID_TWITTER_WIDGET_VERSION', '1.2.1');
+define('RAPID_TWITTER_WIDGET_VERSION', '1.3');
 
 class Rapid_Twitter_Widget extends WP_Widget {
 
-	function Rapid_Twitter_Widget() {
+	function __construct() {
 		$widget_ops = array(
 			'classname'   => 'widget_twitter widget_twitter--hidden',
 			'description' => __( 'Display your tweets from Twitter')
 		);
-		parent::WP_Widget( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
+		parent::__construct( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
 		
 		if ( is_active_widget(false, false, $this->id_base) ) {
 			add_action( 'wp_head', array(&$this, 'rapid_twitter_widget_style') );
