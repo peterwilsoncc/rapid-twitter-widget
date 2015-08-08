@@ -1,21 +1,27 @@
+.widget .rapid-twitter-btn,
 .rapid-twitter-btn {
-  font: normal normal normal 13px/26px 'Helvetica Neue',Arial,sans-serif;
-	height: 28px;
-	border-radius: 4px;
-	max-width: 100%;
-	box-sizing: border-box;
-	position: relative;
+	color: #333;
 	background-color: #F8F8F8;
- 
 	background-image: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#DEDEDE));
 	background-image: -moz-linear-gradient(top,#FFF,#DEDEDE);
 	background-image: -o-linear-gradient(top,#FFF,#DEDEDE);
 	background-image: -ms-linear-gradient(top,#FFF,#DEDEDE);
 	background-image: linear-gradient(top,#FFF,#DEDEDE);
-	border: #CCC solid 1px;
-	color: #333;
-	font-weight: bold;
+
+	font: bold 13px/26px 'Helvetica Neue',Arial,sans-serif;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+
+	height: 28px;
+	max-width: 100%;
+	box-sizing: border-box;
+
+
+	border: #CCC solid 1px;
+	border-radius: 4px;
+
+	position: relative;
+	
+
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-o-user-select: none;
@@ -27,12 +33,25 @@
 	zoom: 1;
 	text-decoration: none;
 }
- 
-.rapid-twitter-btn:hover {
+
+.widget .rapid-twitter-btn:focus,
+.widget .rapid-twitter-btn:hover,
+.widget .rapid-twitter-btn:active,
+.rapid-twitter-btn:focus,
+.rapid-twitter-btn:hover,
+.rapid-twitter-btn:active {
+	color: #333;
 	text-decoration: none;
+
+    border-color: #bbb;
+    background-color: #d9d9d9;
+    background-image: -webkit-linear-gradient(#f8f8f8,#d9d9d9);
+    background-image: linear-gradient(#f8f8f8,#d9d9d9);
+    box-shadow: none;
 }
  
-.rapid-twitter-btn i {
+.widget .rapid-twitter-btn > i,
+.rapid-twitter-btn > i {
 	width: 21px;
 	height: 16px;
 	left: 4px;
@@ -43,7 +62,8 @@
 	background-position: -24px 0;
 }
  
-.rapid-twitter-btn .label {
+.widget .rapid-twitter-btn > .label,
+.rapid-twitter-btn > .label {
 	padding: 0 7px 0 29px;
 	white-space: nowrap;
 }
