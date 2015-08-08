@@ -13,12 +13,12 @@ define('RAPID_TWITTER_WIDGET_VERSION', '1.2.1');
 
 class Rapid_Twitter_Widget extends WP_Widget {
 
-	function Rapid_Twitter_Widget() {
+	function __construct() {
 		$widget_ops = array(
 			'classname'   => 'widget_twitter widget_twitter--hidden',
 			'description' => __( 'Display your tweets from Twitter')
 		);
-		parent::WP_Widget( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
+		parent::__construct( 'rapid-twitter', __( 'Rapid Twitter' ), $widget_ops );
 		
 		if ( is_active_widget(false, false, $this->id_base) ) {
 			add_action( 'wp_head', array(&$this, 'rapid_twitter_widget_style') );
