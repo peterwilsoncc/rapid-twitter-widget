@@ -18,13 +18,13 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 		for (var i=0; i<widgets_len; i++) {
 			var element = widgets[i],
 				ul = document.createElement('ul');
-			element = document.getElementById(element).parentNode;
+			element = document.getElementById(element);
 			
 			ul.className = 'tweets';
 			ul.innerHTML = the_html;
 			element.appendChild(ul);
 
-			removeClass(element, 'widget_twitter--hidden');
+			removeClass(element.parentNode, 'widget_twitter--hidden');
 		}
 	}
 	RapidTwitter.callback = callback;
@@ -152,7 +152,9 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 								return '<a href="' + elem.url + '" class="tweet__media" title="' + elem.expanded_url + '">' + elem.display_url + '</a>';
 								break;
 							case 'urls':
-								return (elem.display_url)? '<a href="' + elem.url + '" class="tweet__link" title="' + elem.expanded_url + '">' + elem.display_url + '</a>': elem.url;
+								var display_url;
+								display_url = (elem.display_url) ? elem.display_url : elem.url;
+								return (elem.display_url)? '<a href="' + elem.url + '" class="tweet__link" title="' + elem.expanded_url + '">' + display_url + '</a>': elem.url;
 								break;
 							case 'user_mentions':
 								var reply_class = (elem.indices[0] == 0) ? ' tweet__mention--reply' : '';
@@ -161,8 +163,11 @@ RapidTwitter.script = function(RapidTwitter, window, document) {
 							case 'hashtags':
 								return '<a href="https://twitter.com/search?q=%23' + elem.text + '" class="tweet__hashtag"><span>#</span>' + elem.text + '</a>';
 								break;
+							case 'symbols':
+								return '<a href="https://twitter.com/search?q=%24' + elem.text + '" class="tweet__symbols"><span>$</span>' + elem.text + '</a>';
+								break;
 							default:
-								return '';
+								return elem.text;
 						}
 					}()
 				};
