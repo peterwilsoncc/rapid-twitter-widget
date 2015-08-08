@@ -2,11 +2,7 @@
 .rapid-twitter-btn {
 	color: #333;
 	background-color: #F8F8F8;
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#DEDEDE));
-	background-image: -moz-linear-gradient(top,#FFF,#DEDEDE);
-	background-image: -o-linear-gradient(top,#FFF,#DEDEDE);
-	background-image: -ms-linear-gradient(top,#FFF,#DEDEDE);
-	background-image: linear-gradient(top,#FFF,#DEDEDE);
+	background-image: linear-gradient(#FFF,#DEDEDE);
 
 	font: bold 13px/26px 'Helvetica Neue',Arial,sans-serif;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
@@ -45,7 +41,6 @@
 
     border-color: #bbb;
     background-color: #d9d9d9;
-    background-image: -webkit-linear-gradient(#f8f8f8,#d9d9d9);
     background-image: linear-gradient(#f8f8f8,#d9d9d9);
     box-shadow: none;
 }
